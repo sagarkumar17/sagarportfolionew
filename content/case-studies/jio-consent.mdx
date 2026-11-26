@@ -1,0 +1,189 @@
+---
+title: "Jio Consent Management"
+slug: "jio-consent"
+client: "Jio Platforms"
+type: "B2C"
+mockup_scroll: true
+dek: "Designing the system behind consent across an ecosystem."
+summary: "One consent layer connects the choice a person makes with the organisation that needs to act on it—across web, mobile, WebView and POS."
+role: "Product Design · UX Research · Interaction Design · Design Systems"
+platform: "Web · mobile · WebView · POS"
+timeline: "8–10 weeks"
+scope: "Consent lifecycle · admin operations · citizen experience · audit model"
+v1_priority: 3
+format: "mdx-ready"
+source: "raw/jio-consent.html"
+status: "ingested"
+---
+# Jio Consent Management
+
+**Jio Platforms · Consent Management**
+
+*Designing the system behind consent across an ecosystem.*
+
+One consent layer connects the choice a person makes with the organisations, purposes and systems that need to respect it.
+
+> Journey: External PwC India survey · consumer awareness context
+
+## Meta
+
+- **Role:** Product Design · UX Research · Interaction Design · Design Systems
+- **Platform:** Web · mobile · WebView · POS
+- **Timeline:** 8–10 weeks
+- **Scope:** Consent lifecycle · admin operations · citizen experience · audit model
+- **Type:** B2C · mockup-scroll candidate
+
+## The brief
+
+### A consent choice travels across an ecosystem
+
+**The problem.** Consent is more than the moment someone taps yes. The system has to capture a purpose-specific choice, apply it across services, preserve a record and make review or withdrawal possible.
+
+**The solution.** A multi-tenant consent lifecycle connects notices and choices to purpose-linked records, downstream enforcement, operations and citizen-facing review, rights and grievance paths.
+
+**The outcome.** The work delivered a consent lifecycle spanning citizen choice, purpose-linked records, downstream enforcement and operational oversight. The research below grounds the design in India’s privacy context.
+
+Consent has to work for two sides of a relationship. An organisation needs to explain why it wants data, record the person’s choice and ensure that downstream services respect it. A person needs to understand the request, see what they have agreed to and change that choice later. In India, the DPDP Act made clear notice, specific purpose and withdrawal central product requirements. This project treated consent as an ecosystem capability spanning organisations, people, channels and records—not a banner that appears once.
+
+## Research & discovery
+
+### Consent had to work across people, purposes and channels
+
+| Method | Focus | Detail |
+| --- | --- | --- |
+| Regulation | DPDP Act and Rules | Translate requirements into product behaviors; re-check statutory wording for publication. |
+| Market evidence | PwC India survey | Consumer awareness and comprehension context; not Jio participant evidence. |
+| Benchmark | OneTrust · Didomi · Transcend | Compare capability patterns, not visual screens. |
+| Product audit | Consent Management Figma | Admin, consumer, cookie, rights, grievance, breach and ROPA areas. |
+| System context | Tenant · purpose · user · channel | Consent has to travel across app, web, embedded WebView and POS. |
+
+The research started with the operating and regulatory context, then mapped what a reusable consent platform would have to support. I reviewed the DPDP requirements and the MeitY consent challenge brief, examined the roles of data principals, data fiduciaries and service providers, audited the Jio consent experience and mapped admin and citizen workflows. I benchmarked OneTrust, Didomi and Transcend for lifecycle, consent records, preference management and audit capabilities. PwC India’s consumer survey supplied market context: awareness of data rights and withdrawal was low, while many respondents found privacy notices difficult to understand. Those percentages are external survey findings, not interviews conducted for this project.
+
+#### Screens / artifacts
+
+- ![Jio Consent Management research evidence visual](assets/jio-consent-research.svg) — Jio Consent Management research evidence visual
+- ![Consent research board · definitions, actors, India context, competitor benchmark, evidence limits, research plan, decision criteria and measurement framework. · Select to open full size.](assets/consent-research-board.png) — Consent research board · definitions, actors, India context, competitor benchmark, evidence limits, research plan, decision criteria and measurement framework. · Select to open full size.
+
+## What the research revealed
+
+### Five findings shaped the direction
+
+#### 01 / A choice must stay understandable
+
+A person should be able to connect a request to its purpose and the organisation making it, then review that choice later in clear language.
+
+#### 02 / Consent is a lifecycle
+
+Capture is only the beginning. The platform also needs to apply the choice, preserve evidence, reflect changes and support withdrawal or expiry.
+
+#### 03 / One record serves several systems
+
+The same consent state must be interpretable across tenants, purposes and channels so the experience and enforcement do not drift apart.
+
+#### 04 / Operations need proof, not just status
+
+Compliance teams need a traceable record of what was presented, what was selected, when it changed and how a request was handled.
+
+#### 05 / People need a route back
+
+Review, rights requests and grievances are part of the relationship after the initial consent moment, not disconnected support forms.
+
+## Research synthesis
+
+### Consent as a lifecycle, not a checkbox
+
+The design treats consent as a lifecycle: capture a clear choice, apply it, preserve proof and support review or withdrawal.
+
+#### Screens / artifacts
+
+- ![Jio Consent Management research synthesis board](assets/jio-consent-synthesis.svg) — Jio Consent Management research synthesis board
+
+## Design strategy
+
+### The design response
+
+- Explain the purpose before asking for a choice.
+- Make required and optional purposes distinguishable.
+- Keep the active organisation and business scope visible to administrators.
+- Treat withdrawal and grievance handling as complete workflows.
+- Preserve a record that can be audited without exposing unnecessary complexity to the citizen.
+- Reuse templates and patterns while allowing each organisation to configure its own privacy centre.
+
+I structured the design around a shared consent lifecycle with two distinct experiences over the same underlying model. The organisation side configures purposes, notices, templates and operational workflows. The citizen side presents choices and gives people a way to review, withdraw or raise a grievance. A purpose-linked record connects the two, allowing a choice to be acted on and reconstructed later.
+
+## Key decisions
+
+### Make every choice specific, enforceable and reversible
+
+#### External survey
+
+- **What we learned:** Awareness of rights and withdrawal is low in the cited sample.
+- **Design response:** Use plain-language purpose, visible choice and a persistent route to review.
+
+#### Regulatory review
+
+- **What we learned:** Consent must be specific and withdrawable.
+- **Design response:** Model consent as state and record, not a one-off banner.
+
+#### Product audit
+
+- **What we learned:** Multiple channels and service types share a consent platform.
+- **Design response:** Make tenant, purpose, user and channel part of the operating model.
+
+#### Benchmark
+
+- **What we learned:** Mature systems pair control with audit evidence.
+- **Design response:** Connect capture, manage, enforce and prove in one lifecycle.
+
+What we learned: Awareness of rights and withdrawal is low in the cited sample.
+
+Design response: Use plain-language purpose, visible choice and a persistent route to review.
+
+What we learned: Consent must be specific and withdrawable.
+
+Design response: Model consent as state and record, not a one-off banner.
+
+What we learned: Multiple channels and service types share a consent platform.
+
+Design response: Make tenant, purpose, user and channel part of the operating model.
+
+What we learned: Mature systems pair control with audit evidence.
+
+Design response: Connect capture, manage, enforce and prove in one lifecycle.
+
+## Design in practice
+
+### How the decisions show up in the interface
+
+#### Screens / artifacts
+
+- ![Organisation side · consent, cookie, grievance and audit overview. Dashboard values are Figma sample data, not measured platform outcomes.](assets/consent-admin-dashboard.png) — Organisation side · consent, cookie, grievance and audit overview. Dashboard values are Figma sample data, not measured platform outcomes.
+- ![Citizen side · granted-consent list with active and withdrawn states.](assets/consent-citizen-consents.png) — Citizen side · granted-consent list with active and withdrawn states.
+- ![Grievance submission · desktop form, field guidance and annotated accessibility requirements. Open this Figma frame ↗](assets/consent-grievance-flow-figma.png) — Grievance submission · desktop form, field guidance and annotated accessibility requirements. Open this Figma frame ↗
+- ![Citizen portal · mobile grievance form states with semantic, keyboard-order and screen-reader annotations. These notes specify the interface; they are not usability-test results. Open this Figma frame ↗](assets/consent-user-portal-figma.png) — Citizen portal · mobile grievance form states with semantic, keyboard-order and screen-reader annotations. These notes specify the interface; they are not usability-test results. Open this Figma frame ↗
+
+## What we delivered
+
+### From research through release
+
+The project covered a multi-tenant administration experience and a citizen-facing privacy portal. Admin work included configuring organisations and business groups, consent purposes and templates, operational settings and grievance workflows. Citizen work focused on viewing granted consents, managing choices, making requests and following grievance status. The design connected notices, choice capture, consent records, downstream verification and operational oversight into one product model. The public platform now reports that it was selected among the top two solutions in MeitY’s DPDP Code for Consent Challenge and lists scale figures of 50M+ consents created, 3+ lakh revoked and 1.2B validated and tracked; these are current product-level claims, not results attributable to this design project alone.
+
+## Outcomes & evidence
+
+### Clear consent controls address a comprehension gap
+
+PwC India survey findings informed the external market context for this project.
+
+The project’s strongest outcome is the system model: consent is traceable from the request shown to a person through the record used by an organisation and the later action to review or withdraw it. The current Jio Consent Management site reports product-level scale and national recognition, showing the broader platform’s reach. Those figures belong to the product and team over time, rather than to one 8–10 week design engagement.
+
+Current platform figures: Jio Consent Management · Survey context: PwC India
+
+#### Screens / artifacts
+
+- ![Jio Consent Management outcome metrics and evidence](assets/jio-consent-metrics.svg) — Jio Consent Management outcome metrics and evidence
+
+## Reflection
+
+### What I learned and what I would do next
+
+This project changed how I think about privacy UX: a clear screen cannot compensate for an unclear state model behind it. I brought the record, operational roles and citizen experience into the same design conversation. The next validation step is to test comprehension and withdrawal with citizens, and role-based setup and audit tasks with administrators.

@@ -1,0 +1,181 @@
+---
+title: "CN Express Pass"
+slug: "cn-express-pass"
+client: "CN"
+type: "B2B"
+mockup_scroll: false
+dek: "Moving intermodal gate-entry work into the pre-trip journey."
+summary: "The app helps intermodal drivers check bookings, container status and gate-entry requirements from the cab before reaching a rail terminal."
+role: "Senior Lead Experience Designer"
+platform: "iOS & Android · B2B logistics / field workforce"
+timeline: "Oct 2021–Jun 2022"
+scope: "Driver research · terminal journey · mobile flows · design system"
+v1_priority: 7
+format: "mdx-ready"
+source: "raw/cn-express-pass.html"
+status: "ingested"
+---
+# CN Express Pass
+
+**CN · Driver App**
+
+*Moving intermodal gate-entry work into the pre-trip journey.*
+
+The app helps intermodal drivers check bookings, container status and gate-entry requirements from the cab before reaching a rail terminal.
+
+> Journey: Plan → check booking → confirm container → prepare gate pass
+
+## Meta
+
+- **Role:** Senior Lead Experience Designer
+- **Platform:** iOS & Android · B2B logistics / field workforce
+- **Timeline:** Oct 2021–Jun 2022
+- **Scope:** Driver research · terminal journey · mobile flows · design system
+- **Type:** B2B
+
+## The brief
+
+### A terminal queue starts with a problem found too late
+
+**The problem.** Drivers could discover booking, waybilling and reservation problems only on arrival at the terminal. Cab conditions—gloves, sunlight, time pressure and connectivity—made desk-style interactions a poor fit.
+
+**The solution.** The design moved validation into a pre-trip checklist, reduced re-entry with pre-populated details, made container state glanceable and supported paperless gate receipts.
+
+**The outcome.** The project delivered a driver-focused mobile experience that moved booking and container checks into the pre-trip journey, helping drivers arrive prepared for terminal entry.
+
+An intermodal driver could arrive at a rail terminal only to discover that a booking, waybill or reservation was incomplete. The issue was costly twice: drivers lost time in the queue and terminals had avoidable congestion. The next generation of ModalPass needed to help drivers prepare before arrival, while fitting the realities of a truck cab, mobile work and a handoff between drivers and dispatch teams.
+
+## Research & discovery
+
+### The terminal journey had to work in a truck cab
+
+| Method | Focus | Detail |
+| --- | --- | --- |
+| Six Thinking Hats | Problem exploration | Structured workshop |
+| Driver personas | Context constraints | Gloves · sunlight · moving vehicle |
+| Journey map | Terminal visit lifecycle | Plan → arrive → enter → yard → depart |
+| Review analysis | ModalPass v1 | Existing app review themes |
+| Benchmark | Existing solutions | App review and capability comparison |
+
+I used a Six Thinking Hats workshop to explore the problem from operational, emotional and risk perspectives, then developed driver personas around real working constraints such as gloves, sunlight and movement between tasks. I reviewed ModalPass feedback, benchmarked comparable apps, mapped the full terminal visit from planning through departure, and translated the journey into flows and wireframes before visual design. The research focused on where an issue was discovered, what information a driver already had from dispatch, and which tasks could move earlier in the trip.
+
+#### Screens / artifacts
+
+- ![CN Express Pass research evidence visual](assets/cn-express-pass-research.svg) — CN Express Pass research evidence visual
+
+## What the research revealed
+
+### Five findings shaped the direction
+
+#### 01 / The gate was the bottleneck
+
+The most valuable intervention was before arrival. Moving validation upstream reframed the work from queue management to trip planning.
+
+#### 02 / The cab is not an office
+
+Bright light, gloves and time pressure called for large targets, minimal typing and status readable at a glance.
+
+#### 03 / Re-entering known information wasted effort
+
+Dispatch already held booking details. Pre-populating those fields reduced input at the moment drivers had the least patience.
+
+#### 04 / A paper receipt created downstream work
+
+Gate receipts had to travel from driver to trucking company and logistics provider. Digital, shareable proof served the whole chain.
+
+## Design strategy
+
+### The design response
+
+- Move validation to the earliest useful point in the journey.
+- Design for cab conditions with glanceable status and low typing effort.
+- Reuse information already available to dispatch.
+- Make equipment condition easy to document with photos and taps.
+- Make the receipt useful beyond the driver by supporting sharing.
+
+The design centered the experience on a pre-trip checklist: confirm the booking, check container availability and holds, record equipment condition, then prepare the gate pass. Once in the yard, the app continued to support location updates and terminal-specific information. The design used glanceable status cards for decisions that needed to be made quickly and photo-plus-tap damage reporting to keep documentation practical.
+
+## Research synthesis
+
+### Move gate checks into the pre-trip journey
+
+The core shift moved gate validation from an on-site interruption into a pre-trip checklist that fits the driver’s working context.
+
+#### Screens / artifacts
+
+- ![CN Express Pass research synthesis board](assets/cn-express-pass-synthesis.svg) — CN Express Pass research synthesis board
+
+## Key decisions
+
+### Design for the realities of the cab and terminal
+
+#### Review / workflow
+
+- **What we learned:** Booking and waybilling issues surfaced at the gate.
+- **Design response:** Move validation before arrival.
+
+#### Driver context
+
+- **What we learned:** Use can happen in a cab, in sunlight, with gloves.
+- **Design response:** Make status glanceable and input minimal.
+
+#### Journey map
+
+- **What we learned:** Receipt sharing extends beyond the terminal visit.
+- **Design response:** Create a paperless receipt that can be shared with dispatch.
+
+#### Connectivity risk
+
+- **What we learned:** Rail yards may have poor connectivity.
+- **Design response:** Prioritize offline and recovery testing in the next validation phase.
+
+What we learned: Booking and waybilling issues surfaced at the gate.
+
+Design response: Move validation before arrival.
+
+What we learned: Use can happen in a cab, in sunlight, with gloves.
+
+Design response: Make status glanceable and input minimal.
+
+What we learned: Receipt sharing extends beyond the terminal visit.
+
+Design response: Create a paperless receipt that can be shared with dispatch.
+
+What we learned: Rail yards may have poor connectivity.
+
+Design response: Prioritize offline and recovery testing in the next validation phase.
+
+## Design in practice
+
+### How the decisions show up in the interface
+
+#### Screens / artifacts
+
+- ![First use · introducing the driver app and its pre-trip purpose.](assets/cn-pass-screen.png) — First use · introducing the driver app and its pre-trip purpose.
+- ![New visit home · start the terminal visit before arriving at the gate.](assets/cn-trip-check.png) — New visit home · start the terminal visit before arriving at the gate.
+- ![Visit setup · select in-gate or out-gate and enter equipment identifiers.](assets/cn-container-status.png) — Visit setup · select in-gate or out-gate and enter equipment identifiers.
+- ![Digital gate pass · QR code and container details ready for entry.](assets/cn-gate-pass.png) — Digital gate pass · QR code and container details ready for entry.
+
+## What we delivered
+
+### From research through release
+
+The end-to-end design included registration, trip planning, pre-trip gate entry, container availability and hold checks, equipment-damage capture, gate receipts, in-yard container location, safety tips and terminal notifications. Deliverables included personas, the full journey, user flows, wireframes and a mobile design system. The case-study documents describe the work as a next-generation redesign of ModalPass, delivered from research through visual design.
+
+## Outcomes & evidence
+
+### Success means completing more of the visit before arrival
+
+The design moves validation into the pre-trip journey. These measures track readiness, gate flow and downstream handoff.
+
+The case study describes faster and more efficient visits, streamlined registration and booking input, and paperless receipts shared across logistics workflows. It does not provide a measured gate-time or task-success comparison, so the impact is presented through the delivered capability and the operational outcomes the design was intended to enable. The next measurement set is gate wait, pre-trip completion, booking corrections and receipt handoff.
+
+#### Screens / artifacts
+
+- ![CN Express Pass outcome metrics and evidence](assets/cn-express-pass-metrics.svg) — CN Express Pass outcome metrics and evidence
+
+## Reflection
+
+### What I learned and what I would do next
+
+Context-first design helped each pattern fit the driver’s environment. I would bring in-cab field testing earlier and design offline-first from the beginning, since connectivity in rail yards can be unreliable.
