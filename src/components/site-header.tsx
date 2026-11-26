@@ -1,12 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { navLinks, site } from "@/lib/site";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
     <>
@@ -46,7 +53,6 @@ export function SiteHeader() {
         </div>
       </header>
 
-      {/* Full-screen menu stub — mobile now; desktop overlay polish later */}
       <div
         id="site-menu"
         hidden={!open}
@@ -70,6 +76,13 @@ export function SiteHeader() {
           </button>
         </div>
         <nav className="flex flex-1 flex-col justify-center gap-6 px-8" aria-label="Mobile">
+          <Link
+            href="/"
+            className="font-display text-5xl tracking-tight"
+            onClick={() => setOpen(false)}
+          >
+            Home
+          </Link>
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -81,6 +94,7 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
+        <p className="px-8 pb-10 text-sm text-soft">{site.email}</p>
       </div>
     </>
   );

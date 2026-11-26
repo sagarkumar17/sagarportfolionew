@@ -12,16 +12,31 @@ type SmoothScrollProps = {
 };
 
 /**
- * Vertical Lenis + ScrollTrigger bridge.
- * Structure stays vertical-friendly; a future horizontal mode can
- * flip `data-scroll-axis` and Lenis orientation without rewiring routes.
+ * Vertical Lenis + ScrollTrigger bridge (go-live default).
+ *
+ * Horizontal later: set `html[data-scroll-axis="horizontal"]`, pass
+ * `{ orientation: "horizontal" }` to Lenis, and drive sections marked
+ * `data-horizontal-ready="true"` / `data-scroll-hook="work-strip"`.
  */
 export function SmoothScroll({ children }: SmoothScrollProps) {
   useEffect(() => {
+    const axis =
+      document.documentElement.getAttribute("data-scroll-axis") || "vertical";
+
     const lenis = new Lenis({
       autoRaf: false,
       smoothWheel: true,
+      // orientation reserved when axis flips — Lenis types accept string
+      ...(axis === "horizontal" ? { orientation: "horizontal" as const } : null),
     });
+
+    // Expose for future horizontal section controllers
+    (
+      window as Window & { __lenis?: Lenis; __scrollAxis?: string }
+    ).__lenis = lenis;
+    (
+      window as Window & { __lenis?: Lenis; __scrollAxis?: string }
+    ).__scrollAxis = axis;
 
     lenis.on("scroll", ScrollTrigger.update);
 
@@ -35,6 +50,7 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
     return () => {
       gsap.ticker.remove(ticker);
       lenis.destroy();
+      delete (window as Window & { __lenis?: Lenis }).__lenis;
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
