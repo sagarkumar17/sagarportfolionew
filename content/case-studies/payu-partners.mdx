@@ -1,0 +1,191 @@
+---
+title: "PayU Partners Platform"
+slug: "payu-partners"
+client: "PayU"
+type: "B2B"
+mockup_scroll: false
+dek: "Moving partner onboarding from KAM dependency toward self-service."
+summary: "A self-service partner experience makes it easier to refer merchants, follow onboarding and understand incentives without relying on account managers for every step."
+role: "Lead Product Designer"
+platform: "Web · partner dashboard"
+timeline: "Oct 2021–Jun 2022"
+scope: "Partner research · task-based IA · onboarding · status and earnings"
+v1_priority: 2
+format: "mdx-ready"
+source: "raw/payu-partners.html"
+status: "ingested"
+---
+# PayU Partners Platform
+
+**PayU · Partner Program**
+
+*Moving partner onboarding from KAM dependency toward self-service.*
+
+A self-service partner experience makes it easier to refer merchants, follow onboarding and understand incentives without relying on a KAM for routine updates.
+
+> Journey: Partner onboarding · reported outcome
+
+## Meta
+
+- **Role:** Lead Product Designer
+- **Platform:** Web · partner dashboard
+- **Timeline:** Oct 2021–Jun 2022
+- **Scope:** Partner research · task-based IA · onboarding · status and earnings
+- **Type:** B2B
+
+## The brief
+
+### Partner growth depended on self-service
+
+**The problem.** Partners needed a KAM to onboard merchants, understand KYC status or verify incentives. “TBD” timelines and an IA organized around PayU’s internal structure made self-service difficult.
+
+**The solution.** Research reframed the dashboard around partner jobs: add merchants, track status, understand earnings, find resources and manage the account.
+
+**The outcome.** The project reported 40% lower onboarding drop-off and onboarding completion three times faster after the self-service experience was introduced.
+
+PayU’s partner program connected hundreds of active partners to a large merchant network, but its dashboard did not let partners complete basic work independently. Adding a merchant, checking KYC progress and understanding incentives often required a Key Account Manager. That dependency consumed support time and made onboarding feel unpredictable. The design brief said “redesign the platform”; the research reframed the problem as a structural gap in self-service, information architecture and trust.
+
+## Research & discovery
+
+### Partners needed progress, timing and earnings to be visible
+
+| Method | Focus | Detail |
+| --- | --- | --- |
+| 5 groups | Interview coverage | Active, new, stuck, enterprise partners, internal sales |
+| 7 stages | Partner journey | Signup through incentive payout |
+| 4 themes | Pain-point synthesis | Awareness · conversion · usage · retention |
+| 3 structures | IA exploration | Card sorting / prototypes tested with partners |
+| Support evidence | Tickets + KAM logs | Identify recurring assistance requests |
+
+I interviewed 14 people across five groups: active resellers, new resellers, partners stuck partway through onboarding, enterprise platform partners and internal sales stakeholders. Including partners who had stopped was deliberate; successful users alone could not explain where the experience broke down. I paired the interviews with support-ticket and KAM-call analysis, mapped needs against each journey stage, and traced the lifecycle from signup to incentive payout. The work documented more than 60 pain points and grouped them into awareness, conversion, usage and retention themes. Claude supported transcript clustering; the resulting themes were checked against the interview and support evidence.
+
+#### Screens / artifacts
+
+- ![PayU Partners Platform research evidence visual](assets/payu-partners-research.svg) — PayU Partners Platform research evidence visual
+
+## What the research revealed
+
+### Five findings shaped the direction
+
+#### 01 / Stuck partners showed the structural failure
+
+Abandonment was not a cosmetic issue. People could not complete tasks or understand what would happen next without help.
+
+#### 02 / “TBD” damaged confidence
+
+KYC status without a credible time range left partners unable to set expectations for their merchants. Uncertainty created avoidable follow-up.
+
+#### 03 / Navigation reflected PayU, not partner work
+
+The original 11-item structure followed internal product groupings. Partners thought in tasks: add a merchant, track it, understand earnings and get help.
+
+#### 04 / KAM calls were a symptom
+
+Routine questions about status and progress pointed to missing self-service information, rather than a preference for phone support.
+
+#### 05 / Earnings needed an explanation
+
+A total without visible calculation made incentives hard to verify and generated another reason to contact support.
+
+## What people said
+
+> “Where is my merchant?”
+
+> — A recurring partner question documented in the KAM-call analysis. It pointed to missing self-serve onboarding status.
+
+## Design strategy
+
+### The design response
+
+- Organize around partner tasks rather than internal product taxonomy.
+- Replace vague statuses with credible next steps and time ranges.
+- Explain earnings at the merchant and transaction level.
+- Let partners add and follow merchants without a KAM handoff.
+- Keep support visible for exceptions while reducing routine dependency.
+
+The strategy was to make the dashboard self-serve by default and make escalation the exception. The information architecture moved from 11 product-based items to five partner jobs: Add Merchants, Track Status, Earnings, Resources and Account. The journey became a connected pipeline, with clear timelines and blockers, transparent incentive calculations and KAM support available when a case genuinely needed intervention.
+
+## Key decisions
+
+### Make progress, timing and earnings easy to understand
+
+#### Recruitment
+
+- **What we learned:** Partners who abandoned onboarding surfaced failure points.
+- **Design response:** Design for stuck and recovering partners, not only successful ones.
+
+#### Journey + support
+
+- **What we learned:** Routine status checks drove KAM contact.
+- **Design response:** Surface merchant progress and blockers in self-service.
+
+#### Interview synthesis
+
+- **What we learned:** “TBD” created uncertainty; incentive math was opaque.
+- **Design response:** Show actionable timelines and transparent calculations.
+
+#### Navigation audit
+
+- **What we learned:** 11 items reflected PayU’s organization.
+- **Design response:** Group the experience around five partner tasks.
+
+What we learned: Partners who abandoned onboarding surfaced failure points.
+
+Design response: Design for stuck and recovering partners, not only successful ones.
+
+What we learned: Routine status checks drove KAM contact.
+
+Design response: Surface merchant progress and blockers in self-service.
+
+What we learned: “TBD” created uncertainty; incentive math was opaque.
+
+Design response: Show actionable timelines and transparent calculations.
+
+What we learned: 11 items reflected PayU’s organization.
+
+Design response: Group the experience around five partner tasks.
+
+## Research synthesis
+
+### Turn partner support requests into self-service
+
+The research reframed KAM calls as evidence of missing self-service: partners needed clear status, realistic timing and explainable earnings.
+
+#### Screens / artifacts
+
+- ![PayU Partners Platform research synthesis board](assets/payu-partners-synthesis.svg) — PayU Partners Platform research synthesis board
+
+## Design in practice
+
+### How the decisions show up in the interface
+
+#### Screens / artifacts
+
+- ![Partner account creation · self-serve signup and referral program context.](assets/payu-partner-onboarding-screen.png) — Partner account creation · self-serve signup and referral program context.
+- ![Partner activation · PAN verification and staged account setup.](assets/payu-partner-kyc-screen.png) — Partner activation · PAN verification and staged account setup.
+- ![Partner dashboard system · desktop and mobile variations across KYC and referral states. This is a board overview; use Figma to inspect individual designs. Open dashboard board ↗](assets/payu-partner-dashboard-figma.png) — Partner dashboard system · desktop and mobile variations across KYC and referral states. This is a board overview; use Figma to inspect individual designs. Open dashboard board ↗
+- ![Signup flows · new and recurring partner states, including validation and recovery. Open flow board ↗](assets/payu-partner-auth-flow-figma.png) — Signup flows · new and recurring partner states, including validation and recovery. Open flow board ↗
+
+## What we delivered
+
+### From research through release
+
+The design work moved through partner interviews and journey mapping, pain-point synthesis, card sorting and prototype testing of three information architectures, then low- and mid-fidelity onboarding explorations. The final platform direction brought together merchant addition, KYC progress, pipeline blockers, earnings breakdowns, resources and account management. KAMs shifted from the default path for status updates toward an escalation role. The project materials report the new task-based IA as a pattern adopted by other PayU B2B products.
+
+## Outcomes & evidence
+
+### Self-service made onboarding faster and more complete
+
+The project reports lower onboarding drop-off and faster completion after the platform redesign.
+
+The project reports onboarding drop-off falling by 40% and completion becoming three times faster. It also describes lower routine KAM contact and reuse of the task-based IA elsewhere in PayU. The metrics frame the outcome around the original problem: more partners could move a merchant through onboarding without needing a person to explain the platform at every step.
+
+#### Screens / artifacts
+
+- ![PayU Partners Platform outcome metrics and evidence](assets/payu-partners-metrics.svg) — PayU Partners Platform outcome metrics and evidence
+
+## Reflection
+
+### What I learned and what I would do next
+
+Recruiting partners who had abandoned the process made the research more actionable than a study of successful users alone. I would instrument the onboarding funnel before redesign, align KAMs earlier on the shift to exception support, and phase the new IA with migration help for existing partners.

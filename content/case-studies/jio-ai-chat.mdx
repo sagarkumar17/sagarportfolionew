@@ -1,0 +1,208 @@
+---
+title: "Jio AI Chat"
+slug: "jio-ai-chat"
+client: "Jio Platforms"
+type: "B2C"
+mockup_scroll: true
+dek: "Turning a failing support chatbot into an intent-aware assistant."
+summary: "A support assistant designed to understand common customer needs, give clearer answers and make human help easier to reach."
+role: "Senior Product Designer"
+platform: "Android & iOS · MyJio, JioTV and JioCinema"
+timeline: "Jan–Aug 2024 · outcomes measured three months after launch"
+scope: "Research · conversation model · interaction design · design system"
+v1_priority: 1
+format: "mdx-ready"
+source: "raw/jio-ai-chat.html"
+status: "ingested"
+---
+# Jio AI Chat
+
+**Jio Platforms · Conversational AI**
+
+*Turning a failing support chatbot into an intent-aware assistant.*
+
+A support assistant designed to understand common customer needs, give clearer answers and make human help easier to reach.
+
+> Journey: Recharge · plans · network · bills · SIM activation
+
+## Meta
+
+- **Role:** Senior Product Designer
+- **Platform:** Android & iOS · MyJio, JioTV and JioCinema
+- **Timeline:** Jan–Aug 2024 · outcomes measured three months after launch
+- **Scope:** Research · conversation model · interaction design · design system
+- **Type:** B2C · mockup-scroll candidate
+
+## The brief
+
+### Support had to work at Jio scale
+
+**The problem.** A linear decision tree did not recognize intent, held no session memory, and hid agent escalation 4–5 taps deep. Text-heavy flows and missing feedback made it hard to know what was failing.
+
+**The solution.** A hybrid assistant pairs quick replies for common queries with open text for edge cases, warmer responses, a persistent agent path and per-message feedback.
+
+**The outcome.** Three months after launch, the project reported CSAT rising from 2.6 to 4.2, call volume falling by 55–60% and average resolution time dropping below 90 seconds.
+
+Jio serves hundreds of millions of customers across India, making digital support an important first point of contact. The existing chatbot had become a costly dead end: people who could not complete a task often moved to phone support, while the service team had little structured feedback about where the conversation failed. The goal was to improve resolution, trust and access to human help without making the assistant slower for common requests.
+
+## Outcomes & evidence
+
+### A focused intent model improved support outcomes
+
+Outcomes reported three months after launch across the Jio app ecosystem.
+
+Three months after launch, the case-study reports CSAT increasing from 2.6 to 4.2, call volume reducing by 55–60%, and average resolution taking under 90 seconds. The team also reported fewer repeat contacts and incorporated response feedback into quarterly model retraining. These results connect the interface to the support operation: shorter paths helped people resolve common tasks, and the feedback loop gave the team a way to improve answers over time.
+
+#### Screens / artifacts
+
+- ![Jio AI Chat outcome metrics and evidence](assets/jio-ai-chat-metrics.svg) — Jio AI Chat outcome metrics and evidence
+
+## Research & discovery
+
+### Five high-volume needs shaped the conversation model
+
+| Method | Focus | Detail |
+| --- | --- | --- |
+| 3 weeks | Discovery period | Heuristic review, interviews, tickets and analytics |
+| 12 | User interviews | Jio users across age groups and geographies |
+| 3 × n=4 | Concept tests | Card-tree, AI-first and hybrid paradigms |
+| Top 5 = 68% | Query concentration | Recharge, plans, network, bill payment, SIM activation |
+| 3× | Quick-reply performance | Reported in moderated testing; confirm task and measure |
+| 4–5 → 1 tap | Agent access | Source describes moving escalation closer |
+
+I spent three weeks understanding both sides of the support experience before changing the interface. I reviewed the existing conversation against Nielsen’s usability heuristics, interviewed 12 Jio users across age groups and geographies, analyzed support tickets, compared Jio with Airtel Thanks, Vi and global AI support patterns, and reviewed analytics for session length, drop-off and resolution by flow. I then tested three low-fidelity conversation models with four people each: a visual card tree, an AI-first chat and a hybrid. Claude helped cluster interview transcripts; I reviewed the themes against the source material. Figma AI helped lay out competitor comparisons and generate early screen variations for discussion.
+
+#### Screens / artifacts
+
+- ![Jio AI Chat research evidence visual](assets/jio-ai-chat-research.svg) — Jio AI Chat research evidence visual
+
+## What the research revealed
+
+### Five findings shaped the direction
+
+#### 01 / The need was concentrated
+
+Five intents—recharge, plans, network, bills and SIM activation—accounted for 68% of queries. A small set of clear entry points could serve a large share of support demand.
+
+#### 02 / The escape route was hidden
+
+“Talk to an agent” was one of the most sought-after actions, yet took four to five taps to reach. People who could not find help abandoned the conversation.
+
+#### 03 / Correct answers still felt robotic
+
+Users over 40 could receive an accurate response and still leave because the tone did not make them feel understood. Trust depended on how the answer was delivered.
+
+#### 04 / Text-heavy flows excluded people
+
+Users aged 45+ had higher drop-off in text-led paths. Card-based quick replies performed three times better in moderated testing.
+
+#### 05 / There was no learning loop
+
+Without message-level feedback, the team could not see which answers failed or why. A feedback control needed to connect experience quality with model improvement.
+
+## Design strategy
+
+### The design response
+
+- Resolve the task, not maximize chat time.
+- Keep the agent path visible in every conversation state.
+- Use warm, plain language and explain what the assistant is doing.
+- Offer visual shortcuts for frequent requests and accessible touch targets.
+- Attach feedback to each response so weak answers can be found.
+- Design the conversation model and interface together; test language and AI limits early.
+
+The strategic move was from a decision-tree navigator to an intent-aware assistant: keep common needs predictable and fast, let people describe less common problems in their own words, and make human help visible at every point. The hybrid concept won in testing because it supported both quick selections and open-ended questions without forcing every user into one interaction style.
+
+## Research synthesis
+
+### Five intents, one hybrid assistant
+
+A hybrid model preserved predictable shortcuts for frequent needs while leaving room for open-ended requests.
+
+#### Screens / artifacts
+
+- ![Jio AI Chat research synthesis board](assets/jio-ai-chat-synthesis.svg) — Jio AI Chat research synthesis board
+
+## Key decisions
+
+### Keep common needs quick and human help close
+
+#### Analytics
+
+- **What we learned:** Five query types made up 68% of volume.
+- **Design response:** Prioritize quick replies for the common intents.
+
+#### Session analysis
+
+- **What we learned:** Agent handoff was searched for but buried.
+- **Design response:** Keep escalation visible throughout the conversation.
+
+#### Interviews / tests
+
+- **What we learned:** Older users struggled with text-heavy paths; cards performed better in testing.
+- **Design response:** Use visual shortcuts and accessible content.
+
+#### Feedback gap
+
+- **What we learned:** No signal identified weak responses.
+- **Design response:** Add feedback to the conversation and model-learning loop.
+
+What we learned: Five query types made up 68% of volume.
+
+Design response: Prioritize quick replies for the common intents.
+
+What we learned: Agent handoff was searched for but buried.
+
+Design response: Keep escalation visible throughout the conversation.
+
+What we learned: Older users struggled with text-heavy paths; cards performed better in testing.
+
+Design response: Use visual shortcuts and accessible content.
+
+What we learned: No signal identified weak responses.
+
+Design response: Add feedback to the conversation and model-learning loop.
+
+## The ecosystem pattern in practice
+
+### One chat foundation, adapted to each service
+
+The selected Figma frames show how the shared conversation pattern responds to different product contexts. JioMart Assist keeps delivery information in the conversation; the retail example adds order updates and service options; the EdTech example supports file-based follow-ups. The handoff state shows how a person can move from automated help to an agent while understanding what happens next.
+
+Selected prototype examples from the shared Jio Chat Pattern Figma file.
+
+#### Screens / artifacts
+
+- ![JioMart Assist · Core conversation Delivery context stays in the chat, with a clear path from an unlisted issue to customer care. Figma frame: ChatBot · 1068:132135](assets/jio-chat-figma/jiomart-assist-chat.jpeg) — JioMart Assist · Core conversation Delivery context stays in the chat, with a clear path from an unlisted issue to customer care. Figma frame: ChatBot · 1068:132135
+- ![Human handoff · Service recovery The joining state confirms that an agent is entering the conversation, so customers know what is happening next. Figma frame: Agent Handover Screen · 1068:132125](assets/jio-chat-figma/agent-handover.jpeg) — Human handoff · Service recovery The joining state confirms that an agent is entering the conversation, so customers know what is happening next. Figma frame: Agent Handover Screen · 1068:132125
+- ![Retail · Context-specific support Order updates appear alongside callback and live-chat options when self-service is not enough. Figma frame: Retail Chat Screen · 1067:127956](assets/jio-chat-figma/retail-chat.jpeg) — Retail · Context-specific support Order updates appear alongside callback and live-chat options when self-service is not enough. Figma frame: Retail Chat Screen · 1067:127956
+- ![EdTech · File-based follow-up The conversation pattern extends to document and image attachments alongside follow-up questions. Figma frame: EdTech Chat Screen · 1068:132333](assets/jio-chat-figma/edtech-chat.jpeg) — EdTech · File-based follow-up The conversation pattern extends to document and image attachments alongside follow-up questions. Figma frame: EdTech Chat Screen · 1068:132333
+
+## Chat_screens · Page 1
+
+### The full HelloJio screen set
+
+The screen source includes the default assistant, conversation history, attachment composition, upload feedback and a contextual sheet. These six top-level instances are the starting point; the complete Figma inventory preserves all grouped input, voice, loading, error, attachment, partner, shopping and support flows.
+
+Open the complete screen inventory: 19 grouped boards and 237 screen-size frames ↗
+
+#### Screens / artifacts
+
+- ![Default chat · service shortcuts The HelloJio entry state pairs common Jio tasks with text and voice input, giving customers visible ways to begin. Figma: 1:2924](assets/jio-chat-screens/core/01-chatbot-01-default-prompt.png) — Default chat · service shortcuts The HelloJio entry state pairs common Jio tasks with text and voice input, giving customers visible ways to begin. Figma: 1:2924
+- ![Conversation history · find past questions A searchable history panel gives people a route back to recent conversations and previously asked questions. Figma: 1:2925](assets/jio-chat-screens/core/02-chatbot-02-conversation-history.png) — Conversation history · find past questions A searchable history panel gives people a route back to recent conversations and previously asked questions. Figma: 1:2925
+- ![Compose with images · contextual prompting Image attachments remain visible while a person edits their prompt, showing how context can be added before sending. Figma: 1:2926](assets/jio-chat-screens/core/03-chatbot-03-attachments-in-composer.png) — Compose with images · contextual prompting Image attachments remain visible while a person edits their prompt, showing how context can be added before sending. Figma: 1:2926
+- ![Upload guardrail · file-size error The interface states the 20 MB limit when an upload fails, explaining the issue and how to recover. Figma: 1:2927](assets/jio-chat-screens/core/04-chatbot-04-file-size-error.png) — Upload guardrail · file-size error The interface states the 20 MB limit when an upload fails, explaining the issue and how to recover. Figma: 1:2927
+- ![Context sheet · placeholder layout This bottom-sheet frame still contains placeholder title, description and content slots; confirm or replace them before presenting it as a final product screen. Figma: 1:2928](assets/jio-chat-screens/core/05-chatbot-05-bottom-sheet.png) — Context sheet · placeholder layout This bottom-sheet frame still contains placeholder title, description and content slots; confirm or replace them before presenting it as a final product screen. Figma: 1:2928
+- ![Default assistant · duplicate instance This top-level frame repeats the default assistant state from 1:2924; it is retained here because it appears as a separate source instance. Figma: 69280:63237](assets/jio-chat-screens/core/06-chatbot-06-core-assistant.png) — Default assistant · duplicate instance This top-level frame repeats the default assistant state from 1:2924; it is retained here because it appears as a separate source instance. Figma: 69280:63237
+
+## What we delivered
+
+### From research through release
+
+The work covered the entry state, active conversation, response loading, unresolved questions, agent handoff, session resume, resolution summary and dark mode. I also defined reusable chat bubbles, quick-reply chips, typing and loading states, and response feedback components. The design shipped across MyJio, JioTV and JioCinema, with the components reused by three other Jio product teams. The team included UX, technology and front-end leads, so the conversation states and the data needed for feedback were considered alongside the visual design.
+
+## Reflection
+
+### What I learned and what I would do next
+
+The work showed me that a conversational interface is only as useful as its recovery paths. I would involve the model team from the first concept sprint, bring voice and regional-language testing into v1, and establish the analytics dashboard before launch rather than six weeks afterward.

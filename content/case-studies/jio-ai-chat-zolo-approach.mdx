@@ -1,0 +1,235 @@
+---
+title: "Jio AI Chat Pattern (Zolo approach)"
+slug: "jio-ai-chat-zolo-approach"
+client: "Jio Platforms"
+type: "B2C"
+mockup_scroll: true
+dek: "Making help feel familiar across Jio’s products—while leaving room for each service to stay relevant."
+summary: "A reusable conversational foundation for the standalone assistant, embedded product chats and partner experiences."
+role: "Senior Product Designer"
+platform: "Android & iOS · MyJio, JioTV, JioCinema"
+timeline: "Jan–Aug 2024"
+scope: "Research · interaction model · UI · design system"
+team: "George Davis · UX Lead; Lokesh · Tech Lead; Raviraj · Front-end Lead"
+related: "jio-ai-chat"
+note: "Alternate / deeper research framing of the Jio AI Chat pattern (Zolo approach)."
+v1_priority: 9
+format: "mdx-ready"
+source: "raw/jio-ai-chat-zolo-approach.html"
+status: "ingested"
+---
+# Jio AI Chat Pattern (Zolo approach)
+
+**CASE STUDY · ECOSYSTEM PATTERN**
+
+*Making help feel familiar across Jio’s products—while leaving room for each service to stay relevant.*
+
+I designed a reusable conversational foundation for the standalone assistant, embedded product chats and partner experiences. The work brought guided actions, open input, recovery states and human support into one adaptable interaction model.
+
+## Meta
+
+- **Role:** Senior Product Designer
+- **Platform:** Android & iOS · MyJio, JioTV, JioCinema
+- **Timeline:** Jan–Aug 2024
+- **Scope:** Research · interaction model · UI · design system
+- **Team:** George Davis · UX Lead; Lokesh · Tech Lead; Raviraj · Front-end Lead
+- **Type:** B2C · mockup-scroll candidate
+- **Related:** [jio-ai-chat](./jio-ai-chat.md)
+
+## Project overview
+
+**The problem.** Chat experiences looked and behaved differently across Jio products. Teams were rebuilding similar support patterns independently.
+
+**The solution.** A configurable chat framework joined guided actions with open text and voice, and made recovery and human help part of the pattern.
+
+**The outcome.** A shared interaction foundation, with reported service improvements across the project’s case-study materials.
+
+## THE BRIEF
+
+### One ecosystem. Many reasons to ask for help.
+
+> Build a shared chat foundation that feels familiar to customers and configurable for product teams.
+
+Jio’s products and services create different support moments, but people should not need to relearn the basics every time they open a chat. At the same time, a single rigid flow cannot serve every product or customer need.
+
+The challenge was to define what should stay consistent—how people start, understand responses, recover and reach a person—and what should adapt to the host service.
+
+## RESEARCH & DISCOVERY
+
+### Understand the support failure before redesigning the chat.
+
+- 12 User interviews Jio customers across age groups and geographies.
+
+- 3 wks Discovery Heuristic review, ticket analysis, analytics and benchmarking.
+
+- 68% Top five intents Recharge, plans, network, bill payment and SIM activation, as reported in the project source.
+
+#### 12
+
+Jio customers across age groups and geographies.
+
+#### 3 wks
+
+Heuristic review, ticket analysis, analytics and benchmarking.
+
+#### 68%
+
+Recharge, plans, network, bill payment and SIM activation, as reported in the project source.
+
+For the Jio AI Chat project, I spent three weeks reviewing the existing experience and combining user interviews with support-ticket and analytics review. The goal was to identify where people lost confidence, which needs repeated across services, and what the assistant should do when automation could not resolve an issue.
+
+The project synthesis translated recurring support needs into experience requirements.
+
+A separate AJIO/Haptik study by Neha Dhall and Mohana Saraf analyzed 30 chat histories from April 2022 and interviewed seven customers who had either moved to another support channel or had their issue resolved. It documented multi-step chat discovery, long waits for advisors, repeated explanations, unclear bot wording and cases where customers had no clear fallback.
+
+This is prior research on AJIO’s Gogo chatbot, authored by Neha Dhall and Mohana Saraf—not the 2024 Jio AI Chat study. The presentation explicitly warns against attaching percentages to its qualitative findings.
+
+Jio project sample counts and methods are taken from the supplied Jio case-study text. The earlier AJIO findings are shown as related historical evidence, not as research conducted by me for this project.
+
+## FROM OLD TO NEW
+
+### What changed when support moved from a bot script to a reusable chat pattern?
+
+This comparison brings the earlier research and later design together. The left screen is AJIO’s Gogo chatbot from the 2022 study; the right screens are Jio AI Chat design examples. They are related work, not the same product release.
+
+THEN · AJIO GOGO · 2022
+
+NOW · JIO AI CHAT
+
+NOW · HANDOFF STATE
+
+The AJIO research is qualitative and predates the Jio redesign; it is not the Jio baseline. The outcome values are reported in the Jio case-study text three months after launch. Confirm the source and measurement scope before publication.
+
+#### Screens / artifacts
+
+- ![Persona and task were out of sync. The greeting calls Ace a “virtual fashion assistant,” then switches to an order update. The study found that users did not understand the name and the label set the wrong expectation.](assets/jio-ai-chat-research/ajio-gogo-2022-entry.png) — Persona and task were out of sync. The greeting calls Ace a “virtual fashion assistant,” then switches to an order update. The study found that users did not understand the name and the label set the wrong expectation.
+- ![Task-first entry Quick actions help people start; open input supports requests outside the list.](assets/jio-chat-screens/core/01-chatbot-01-default-prompt.png) — Task-first entry Quick actions help people start; open input supports requests outside the list.
+- ![Visible human support The join state confirms when customer care enters the conversation.](assets/jio-chat-figma/agent-handover.jpeg) — Visible human support The join state confirms when customer care enters the conversation.
+
+## THE DESIGN CHALLENGE
+
+### A blank prompt is flexible. A menu is predictable. The pattern needed both.
+
+Open text can handle a wide range of needs, but asks people to know what to say. A fully guided menu is easier to scan, but can become brittle when a request falls outside its choices.
+
+So the system needed to move between guided and open interaction without losing the customer’s context—or the path to human support.
+
+## IDEATION & CONCEPT TESTING
+
+### Test the interaction model before polishing the UI.
+
+#### Visual category tree
+
+Highly guided choices for common requests; limited when the issue did not fit the menu.
+
+#### AI-first chat
+
+Open conversation with intent suggestions; flexible, but asked more of people at the start.
+
+#### Hybrid: chips + chat + agent
+
+Quick replies for frequent intents, open input for edge cases, and a persistent route to human support.
+
+I explored three low-fidelity directions with four participants each. The comparison helped the team weigh discoverability, flexibility and recovery before committing to a high-fidelity system.
+
+Concept testing: three directions, n=4 per concept, as documented in the supplied Jio case-study text.
+
+## KEY DESIGN DECISIONS
+
+### Turn the research into reusable interaction rules.
+
+#### Offer a clear start, then let people ask their way.
+
+Common needs appear as visible actions. Text and voice support requests that do not fit a preset path.
+
+#### Design the moments when the conversation does not go smoothly.
+
+Loading, upload errors, unclear responses and agent handoff are part of the assistant—not exceptions outside the design system.
+
+#### Keep core behaviors stable; let service context change.
+
+Use the same conversation mechanics across products, while surfacing relevant order, account or service information inside the host experience.
+
+#### Screens / artifacts
+
+- ![Start with examples Suggested tasks make the assistant’s range easier to understand.](assets/jio-chat-screens/core/01-chatbot-01-default-prompt.png) — Start with examples Suggested tasks make the assistant’s range easier to understand.
+- ![Keep open input available Text and voice patterns extend beyond the preset actions.](assets/jio-chat-screens/boards/01-ai-chat-input.png) — Keep open input available Text and voice patterns extend beyond the preset actions.
+- ![Explain and recover The file-size error gives a reason for failure while keeping the chat context.](assets/jio-chat-screens/core/04-chatbot-04-file-size-error.png) — Explain and recover The file-size error gives a reason for failure while keeping the chat context.
+- ![Make the handoff legible The joining state confirms the transition to customer care.](assets/jio-chat-figma/agent-handover.jpeg) — Make the handoff legible The joining state confirms the transition to customer care.
+- ![JioMart · Delivery support Delivery context stays inside the conversation.](assets/jio-chat-figma/jiomart-assist-chat.jpeg) — JioMart · Delivery support Delivery context stays inside the conversation.
+- ![Retail · Order support Order information appears with relevant support options.](assets/jio-chat-figma/retail-chat.jpeg) — Retail · Order support Order information appears with relevant support options.
+
+## THE ECOSYSTEM PATTERN
+
+### Same conversational grammar. Different service context.
+
+#### HelloJio
+
+A dedicated assistant destination for questions across services.
+
+#### Inside a Jio product
+
+Chat stays close to the product and task already in progress.
+
+#### Connected service
+
+The interaction can extend into a partner experience with a clear transition.
+
+The pattern was designed to move across three contexts. The interface can change around the customer’s product or task, while core behaviors remain recognizable: how to begin, how to add context, how to understand a response and how to get more help.
+
+Examples are selected from supplied Jio Chat Pattern Figma frames. Confirm release status before describing them as shipped.
+
+#### Screens / artifacts
+
+- ![EdTech · File-based follow-up Attachment support brings context into a follow-up conversation.](assets/jio-chat-figma/edtech-chat.jpeg) — EdTech · File-based follow-up Attachment support brings context into a follow-up conversation.
+- ![JioMart · Human handoff The person can see when a customer care agent joins the existing chat.](assets/jio-chat-figma/agent-handover.jpeg) — JioMart · Human handoff The person can see when a customer care agent joins the existing chat.
+
+## DESIGNING AROUND AI
+
+### The model is not the whole experience.
+
+#### While it is working
+
+Loading feedback signals that the request is still in progress.
+
+#### When it cannot answer
+
+Failure patterns should keep the conversation moving toward a useful next step.
+
+#### When context helps
+
+Attachments let people bring supporting information into a request.
+
+People need to know what they can ask, understand what the assistant is doing, and have a next step when a response is delayed or incomplete. The project material names Haptik, Gemini and custom GPTs as underlying systems; my contribution was the product interface and interaction patterns, not model development.
+
+These screens document interaction states; they do not establish model accuracy or a measured AI safety result.
+
+## AI IN THE DESIGN PROCESS
+
+### Use AI to accelerate exploration; keep judgment with the team.
+
+AI tools supported synthesis and rapid prototyping. They helped make more options visible sooner, while the research evidence, concept selection and final interaction decisions stayed grounded in source material and moderated testing.
+
+AI accelerated synthesis and exploration; it did not replace participant research, source review or concept testing.
+
+## THE OUTCOME
+
+### A shared framework, with service outcomes reported in the project material.
+
+#### 2.6 → 4.2
+
+Reported three months after launch.
+
+#### 55–60%
+
+Reported three months after launch.
+
+#### < 90 sec
+
+Reported three months after launch.
+
+The work established reusable patterns for text and voice input, response states, feedback, attachments, errors, timeouts and human handoff. The supplied case-study text reports a launch across five Jio apps and reuse of the design-system components by three other product teams.
+
+## WHAT I LEARNED
+
+## NEXT PROJECT

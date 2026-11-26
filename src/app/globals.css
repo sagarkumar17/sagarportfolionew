@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+:root {
+  /* Plux editorial palette */
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --ink: #0a0a0a;
+  --dark: #171717;
+  --muted: #595959;
+  --muted-soft: #7a7a7a;
+  --soft: #a3a3a3;
+  --ground: #f5f5f5;
+  --ground-strong: #ebebeb;
+  --accent: #dc1618;
+  --accent-foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ink: var(--ink);
+  --color-dark: var(--dark);
+  --color-muted: var(--muted);
+  --color-muted-soft: var(--muted-soft);
+  --color-soft: var(--soft);
+  --color-ground: var(--ground);
+  --color-ground-strong: var(--ground-strong);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-playfair);
+  --font-script: var(--font-caveat);
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  color: var(--ink);
+}
+
+/* Vertical-first shell; data-scroll-axis can flip for future horizontal Lenis */
+[data-scroll-axis="vertical"] {
+  overflow-x: clip;
+}
+
+.prose-case {
+  max-width: 42rem;
+}
+
+.prose-case h1,
+.prose-case h2,
+.prose-case h3 {
+  font-family: var(--font-playfair), Georgia, serif;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+.prose-case h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.05;
+  margin-bottom: 1rem;
+}
+
+.prose-case h2 {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.prose-case h3 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-case p,
+.prose-case li {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--dark);
+}
+
+.prose-case p + p {
+  margin-top: 1.1rem;
+}
+
+.prose-case a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.prose-case blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.prose-case table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+.prose-case th,
+.prose-case td {
+  border-bottom: 1px solid var(--ground-strong);
+  text-align: left;
+  padding: 0.65rem 0.5rem;
+  vertical-align: top;
+}
+
+.prose-case ul,
+.prose-case ol {
+  padding-left: 1.25rem;
+  margin: 1rem 0;
+}
+
+.prose-case li + li {
+  margin-top: 0.4rem;
+}
+
+.prose-case strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.prose-case img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem 0;
+  background: var(--ground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
