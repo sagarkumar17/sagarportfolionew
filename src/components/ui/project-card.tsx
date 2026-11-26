@@ -7,8 +7,8 @@ import {
   isDeepCaseStudy,
   type CaseStudyMeta,
 } from "@/lib/case-studies-shared";
-import { projectCoverPath } from "@/lib/content";
 import { cn } from "@/lib/cn";
+import { Placeholder } from "./placeholder";
 import { Tag } from "./tag";
 
 export type ProjectCardSize = "wide" | "large" | "small";
@@ -33,7 +33,6 @@ export function ProjectCard({
 }: ProjectCardProps) {
   const { play } = useSound();
   const deep = isDeepCaseStudy(study.slug);
-  const cover = projectCoverPath(study.slug);
 
   const aspect =
     size === "wide"
@@ -41,6 +40,9 @@ export function ProjectCard({
       : size === "large"
         ? "aspect-[16/10]"
         : "aspect-[4/3]";
+
+  const placeholderKind =
+    size === "wide" ? "wide" : size === "large" ? "large" : "4x3";
 
   const titleClass =
     size === "wide"
@@ -62,11 +64,10 @@ export function ProjectCard({
           aspect,
         )}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={cover}
-          alt=""
-          className="h-full w-full object-cover transition-[filter,opacity] duration-300 group-hover:brightness-75"
+        <Placeholder
+          kind={placeholderKind}
+          fill
+          className="transition-[filter,opacity] duration-300 group-hover:brightness-75"
         />
         <div className="pointer-events-none absolute inset-0 flex items-end justify-between gap-4 bg-gradient-to-t from-static-black/50 to-transparent p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <span className="type-label text-static-white">View case study</span>

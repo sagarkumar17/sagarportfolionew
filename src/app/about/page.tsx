@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { Button, Container, Section, TextLink } from "@/components/ui";
+import {
+  Button,
+  Container,
+  Placeholder,
+  Section,
+  TextLink,
+} from "@/components/ui";
 import { beliefs, experience, stats } from "@/lib/content";
 import { site } from "@/lib/site";
 
@@ -17,14 +22,7 @@ export default function AboutPage() {
       <Container className="py-16 tablet:py-24">
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
           <div className="relative aspect-[4/5] overflow-hidden bg-surface-primary">
-            <Image
-              src="/assets/about/about-section.png"
-              alt=""
-              fill
-              priority
-              className="object-cover object-[15%_center] grayscale"
-              sizes="(max-width: 1024px) 100vw, 40vw"
-            />
+            <Placeholder kind="portrait" fill priority />
           </div>
           <div>
             <p className="type-label text-text-secondary">About</p>
@@ -117,13 +115,7 @@ export default function AboutPage() {
           <div>
             <h2 className="type-h2 text-text-primary">What I believe</h2>
             <div className="relative mt-10 aspect-[16/10] overflow-hidden bg-surface-secondary">
-              <Image
-                src="/assets/about/plux-home.png"
-                alt="Plux Studio reference"
-                fill
-                className="object-cover object-top"
-                sizes="(max-width: 1024px) 100vw, 40vw"
-              />
+              <Placeholder kind="wide" fill />
             </div>
           </div>
           <div className="divide-y divide-border-default border-y border-border-default">

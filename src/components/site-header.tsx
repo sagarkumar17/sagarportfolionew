@@ -26,18 +26,17 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-40 border-b border-border-default bg-surface-secondary/90 backdrop-blur-md">
+      <header className="fixed inset-x-0 top-0 z-40 bg-surface-secondary/80 backdrop-blur-md">
         <div className="mx-auto flex h-14 items-center justify-between px-5 tablet:h-16 tablet:px-8">
           <Link
             href="/"
-            className="type-h3 text-[20px] tracking-[-0.035em] text-text-primary tablet:text-[22px]"
+            className="type-small font-medium tracking-[-0.02em] text-text-primary"
             onClick={go(() => setOpen(false))}
           >
-            {site.shortName}
-            <span className="text-accent">.</span>
+            {site.name}
           </Link>
 
-          <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -55,15 +54,15 @@ export function SiteHeader() {
             >
               Styleguide
             </Link>
-            <div className="ml-2 flex items-center gap-1 border-l border-border-default pl-4">
-              <SoundToggle />
-              <ThemeToggle />
+            <div className="ml-1 flex items-center gap-0.5">
+              <SoundToggle className="px-1.5 [&_span]:hidden" />
+              <ThemeToggle className="px-1.5 [&_span]:hidden" />
             </div>
           </nav>
 
-          <div className="flex items-center gap-1 md:hidden">
-            <SoundToggle />
-            <ThemeToggle />
+          <div className="flex items-center gap-0.5 md:hidden">
+            <SoundToggle className="px-1.5 [&_span]:hidden" />
+            <ThemeToggle className="px-1.5 [&_span]:hidden" />
             <button
               type="button"
               className="inline-flex h-10 w-10 items-center justify-center text-text-primary"
@@ -76,9 +75,9 @@ export function SiteHeader() {
               }}
             >
               {open ? (
-                <X size={22} strokeWidth={1.5} />
+                <X size={20} strokeWidth={1.5} />
               ) : (
-                <Menu size={22} strokeWidth={1.5} />
+                <Menu size={20} strokeWidth={1.5} />
               )}
             </button>
           </div>
@@ -94,10 +93,7 @@ export function SiteHeader() {
         aria-label="Site menu"
       >
         <div className="flex h-14 items-center justify-between px-5">
-          <span className="type-h3 text-[20px] tracking-[-0.035em]">
-            {site.shortName}
-            <span className="text-accent">.</span>
-          </span>
+          <span className="type-small font-medium">{site.name}</span>
           <button
             type="button"
             className="inline-flex h-10 w-10 items-center justify-center"
@@ -107,11 +103,11 @@ export function SiteHeader() {
               setOpen(false);
             }}
           >
-            <X size={22} strokeWidth={1.5} />
+            <X size={20} strokeWidth={1.5} />
           </button>
         </div>
         <nav
-          className="flex flex-1 flex-col justify-center gap-6 px-8"
+          className="flex flex-1 flex-col justify-center gap-5 px-8"
           aria-label="Mobile"
         >
           <Link

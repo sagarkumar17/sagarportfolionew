@@ -9,12 +9,17 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-/* Typography: Inter only — Maël Blanc styleguide (weights 400 / 500 / 600). */
+/*
+  Typography: Inter only — Maël Blanc styleguide.
+  Variable Inter (optical size) matches Framer’s Inter Display feel at large sizes.
+  Scale: Display 120/72/48 · H2 64/42/34 · H3 40/22/20 · Body LG 26/19/18 ·
+  Body 17/15/15 · Small 14 · Label 11 (weights 400/500/600).
+*/
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {

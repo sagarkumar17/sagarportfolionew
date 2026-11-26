@@ -1,10 +1,10 @@
-import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { FaqAccordion } from "@/components/faq-accordion";
 import { MegaBrand } from "@/components/mega-brand";
 import {
   Button,
   Container,
+  Placeholder,
   ProjectShowcase,
   Section,
   TextLink,
@@ -63,13 +63,7 @@ export default function HomePage() {
       <Section soft>
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div className="relative aspect-[4/5] overflow-hidden bg-surface-primary">
-            <Image
-              src="/assets/about/about-section.png"
-              alt=""
-              fill
-              className="object-cover object-[18%_center] grayscale"
-              sizes="(max-width: 1024px) 100vw, 45vw"
-            />
+            <Placeholder kind="portrait" fill />
           </div>
           <div>
             <p className="type-label text-text-secondary">About</p>
@@ -138,13 +132,7 @@ export default function HomePage() {
               identity, and production under one craft standard.
             </p>
             <div className="relative mt-10 aspect-[4/3] overflow-hidden bg-surface-primary">
-              <Image
-                src="/assets/services/services.png"
-                alt=""
-                fill
-                className="object-cover grayscale"
-                sizes="(max-width: 1024px) 100vw, 40vw"
-              />
+              <Placeholder kind="4x3" fill />
             </div>
           </div>
           <div className="flex flex-col divide-y divide-border-default border-y border-border-default">

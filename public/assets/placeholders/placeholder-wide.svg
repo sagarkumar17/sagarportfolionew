@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#d4d4d4"/>
+  <rect x="32" y="32" width="1536" height="836" fill="none" stroke="#8a8a8a" stroke-width="2"/>
+  <line x1="800" y1="48" x2="800" y2="852" stroke="#8a8a8a" stroke-width="1"/>
+  <line x1="48" y1="450" x2="1552" y2="450" stroke="#8a8a8a" stroke-width="1"/>
+  <text x="800" y="438" text-anchor="middle" fill="#8a8a8a" font-family="system-ui,sans-serif" font-size="28" font-weight="500">PLACEHOLDER</text>
+  <text x="800" y="478" text-anchor="middle" fill="#8a8a8a" font-family="system-ui,sans-serif" font-size="18">1600×900</text>
+</svg>

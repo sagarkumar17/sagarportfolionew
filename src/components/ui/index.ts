@@ -10,3 +10,5 @@ export { ThemeToggle } from "./theme-toggle";
 export { SoundToggle } from "./sound-toggle";
 export { SoundLink } from "./sound-link";
 export { Preloader } from "./preloader";
+export { Placeholder, PlaceholderBlock } from "./placeholder";
+export type { PlaceholderKind } from "./placeholder";
