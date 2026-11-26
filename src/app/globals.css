@@ -332,6 +332,11 @@ body {
   background: var(--surface-primary);
 }
 
+/* ─── Motion · Preloader + page enter (section 0) ─── */
+html[data-preloader="active"] {
+  overflow: hidden;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -343,5 +348,9 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  html[data-preloader="active"] {
+    overflow: auto;
   }
 }

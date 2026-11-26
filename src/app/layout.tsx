@@ -33,6 +33,9 @@ export const metadata: Metadata = {
 
 const themeInitScript = `(function(){try{var k='sagar-theme';var m=localStorage.getItem(k);var d=window.matchMedia('(prefers-color-scheme: dark)').matches;var r=m==='dark'||(m!=='light'&&d);if(r)document.documentElement.classList.add('dark');document.documentElement.dataset.theme=r?'dark':'light';}catch(e){}})();`;
 
+/** Skip preloader flash when already seen this session or reduced-motion. */
+const pageReadyInitScript = `(function(){try{var r=window.matchMedia('(prefers-reduced-motion: reduce)').matches;var s=sessionStorage.getItem('sagar-preloader')==='1';if(r||s){document.documentElement.dataset.pageReady='1';}else{document.documentElement.dataset.pageReady='0';document.documentElement.dataset.preloader='active';}}catch(e){document.documentElement.dataset.pageReady='1';}})();`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -43,6 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script dangerouslySetInnerHTML={{ __html: pageReadyInitScript }} />
       </head>
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
         <ThemeProvider>

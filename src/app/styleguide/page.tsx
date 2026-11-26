@@ -3,6 +3,7 @@ import {
   Button,
   Container,
   Placeholder,
+  PreloaderMotionDemo,
   ProjectCard,
   Section,
   Tag,
@@ -14,7 +15,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Styleguide",
   description:
-    "Design system for Sagar Kumar portfolio — colour, type, components, spacing.",
+    "Design system for Sagar Kumar portfolio — colour, type, components, spacing, motion.",
 };
 
 const principles = [
@@ -32,7 +33,7 @@ const principles = [
   },
   {
     t: "Calm UI",
-    b: "Hover changes fill or opacity only. Motion libraries are stubbed for now.",
+    b: "Opacity, blur, and fill only — nothing scales on hover. Motion lands one section at a time.",
   },
 ] as const;
 
@@ -132,7 +133,7 @@ export default function StyleguidePage() {
         <h1 className="type-display text-text-primary">Styleguide</h1>
         <p className="type-body-lg mt-8 max-w-3xl text-text-secondary desktop:mt-10">
           The system behind this portfolio: principles, colour, type, components,
-          spacing and sound. Adapted from Maël Blanc with Plux accent{" "}
+          spacing, motion and sound. Adapted from Maël Blanc with Plux accent{" "}
           <span className="text-accent">#dc1618</span>. Use it as a reference,
           then keep shipping pages on these tokens.
         </p>
@@ -290,19 +291,16 @@ export default function StyleguidePage() {
         </div>
       </Section>
 
-      {/* Motion + Sound */}
-      <Section label="Motion" count={1}>
-        <p className="type-body-lg max-w-2xl text-text-secondary">
-          Paused. GSAP, Lenis, and reveal choreography are stubbed. Prefer
-          opacity and fill changes only until motion is re-enabled.
-        </p>
+      {/* Motion · Preloader (section 0) */}
+      <Section label="Motion · Preloader" count={1}>
+        <PreloaderMotionDemo />
       </Section>
 
       <Section label="Sound" count={1} soft>
         <p className="type-body-lg max-w-2xl text-text-secondary">
           Inspired by gowthamganesan.com. Default muted. Toggle lives in the nav
           next to theme — soft click / whoosh cues and a quiet ambient pad when
-          enabled.
+          enabled. Preloader exit whoosh respects this mute.
         </p>
       </Section>
     </div>
