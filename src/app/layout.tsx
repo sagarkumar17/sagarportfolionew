@@ -1,37 +1,20 @@
 import type { Metadata } from "next";
-import { Caveat, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Inter } from "next/font/google";
+import { Preloader } from "@/components/ui/preloader";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { SoundProvider } from "@/components/sound-provider";
+import { ThemeProvider } from "@/components/theme-provider";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-/* Typography: Instrument Serif (display) + Geist (body/UI) + Caveat (script accent).
-   Inspired by Pineapple Studio (Marselis Serif + clean sans) / editorial studio pairings.
-   Instrument Serif ≈ PP Editorial New vibe; Geist ≈ Neue Montreal / Satoshi-like neo-grotesque.
-   All next/font Google or Vercel-licensed — self-hostable. */
+/* Typography: Inter only — Maël Blanc styleguide (weights 400 / 500 / 600). */
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-});
-
-const caveat = Caveat({
-  variable: "--font-caveat",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -43,19 +26,30 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
 };
 
+const themeInitScript = `(function(){try{var k='sagar-theme';var m=localStorage.getItem(k);var d=window.matchMedia('(prefers-color-scheme: dark)').matches;var r=m==='dark'||(m!=='light'&&d);if(r)document.documentElement.classList.add('dark');document.documentElement.dataset.theme=r?'dark':'light';}catch(e){}})();`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       data-scroll-axis="vertical"
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${caveat.variable} h-full antialiased`}
+      className={`${inter.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground">
-        <SmoothScroll>
-          <SiteHeader />
-          <main className="flex-1 pt-14 md:pt-16">{children}</main>
-          <SiteFooter />
-        </SmoothScroll>
+        <ThemeProvider>
+          <SoundProvider>
+            <SmoothScroll>
+              <Preloader />
+              <SiteHeader />
+              <main className="flex-1 pt-14 tablet:pt-16">{children}</main>
+              <SiteFooter />
+            </SmoothScroll>
+          </SoundProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

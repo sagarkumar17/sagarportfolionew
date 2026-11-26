@@ -2,6 +2,8 @@
 
 import { FormEvent, useState } from "react";
 import { ArrowUpRight, LoaderCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useSound } from "@/components/sound-provider";
 import { contactDetails } from "@/lib/content";
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -20,10 +22,12 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
   const endpointId = formspreeId();
+  const { play } = useSound();
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
+    play("whoosh");
 
     const form = event.currentTarget;
     const data = new FormData(form);
@@ -45,18 +49,18 @@ export function ContactForm() {
           headers: { Accept: "application/json" },
           body: data,
         });
-        if (!res.ok) throw new Error("Formspree rejected the submission.");
+        if (!res.ok) throw new Error("Formspree error");
         setStatus("sent");
         form.reset();
       } catch {
         setStatus("error");
-        setError("Couldn’t send via Formspree. Try email instead.");
+        setError("Something went wrong. Please email me directly.");
       }
       return;
     }
 
     const subject = encodeURIComponent(
-      `Portfolio inquiry${company ? ` — ${company}` : ""}`,
+      company ? `Project inquiry — ${company}` : "Project inquiry",
     );
     const body = encodeURIComponent(
       `Hi Sagar,\n\n${message}\n\n— ${name}\n${email}${company ? `\n${company}` : ""}`,
@@ -66,17 +70,7 @@ export function ContactForm() {
   }
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="flex flex-col gap-6"
-      noValidate
-    >
-      <p className="text-xs uppercase tracking-[0.16em] text-soft">
-        {endpointId
-          ? "Sends via Formspree"
-          : "Opens your email client (mailto) — set NEXT_PUBLIC_FORMSPREE_ID for hosted submit"}
-      </p>
-
+    <form className="flex flex-col gap-6" onSubmit={onSubmit} noValidate>
       <div className="grid gap-6 md:grid-cols-2">
         <Field label="Name" name="name" autoComplete="name" required />
         <Field
@@ -89,36 +83,30 @@ export function ContactForm() {
       </div>
       <Field label="Company / project" name="company" autoComplete="organization" />
       <label className="block">
-        <span className="text-xs uppercase tracking-[0.14em] text-soft">
-          Message
-        </span>
+        <span className="type-label text-text-secondary">Message</span>
         <textarea
           name="message"
           required
           rows={5}
-          className="mt-2 w-full resize-y border-b border-ground-strong bg-transparent py-3 text-lg text-ink outline-none transition-colors placeholder:text-soft focus:border-accent"
+          className="type-body mt-2 w-full resize-y border-b border-border-default bg-transparent py-3 text-text-primary outline-none transition-colors placeholder:text-text-secondary focus:border-accent"
           placeholder="What are you building?"
         />
       </label>
 
       {error ? (
-        <p className="text-sm text-accent" role="alert">
+        <p className="type-small text-accent" role="alert">
           {error}
         </p>
       ) : null}
       {status === "sent" && !error ? (
-        <p className="text-sm text-muted" role="status">
+        <p className="type-small text-text-secondary" role="status">
           {endpointId
             ? "Thanks — your message is on its way."
             : "Your email client should open with the message drafted."}
         </p>
       ) : null}
 
-      <button
-        type="submit"
-        disabled={status === "sending"}
-        className="inline-flex w-fit items-center gap-2 bg-ink px-7 py-3.5 text-sm tracking-wide text-background transition-colors hover:bg-accent disabled:opacity-60"
-      >
+      <Button type="submit" disabled={status === "sending"} className="w-fit">
         {status === "sending" ? (
           <>
             Sending
@@ -130,7 +118,7 @@ export function ContactForm() {
             <ArrowUpRight size={16} strokeWidth={1.5} />
           </>
         )}
-      </button>
+      </Button>
     </form>
   );
 }
@@ -150,15 +138,13 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="text-xs uppercase tracking-[0.14em] text-soft">
-        {label}
-      </span>
+      <span className="type-label text-text-secondary">{label}</span>
       <input
         name={name}
         type={type}
         autoComplete={autoComplete}
         required={required}
-        className="mt-2 w-full border-b border-ground-strong bg-transparent py-3 text-lg text-ink outline-none transition-colors placeholder:text-soft focus:border-accent"
+        className="type-body mt-2 w-full border-b border-border-default bg-transparent py-3 text-text-primary outline-none transition-colors placeholder:text-text-secondary focus:border-accent"
       />
     </label>
   );

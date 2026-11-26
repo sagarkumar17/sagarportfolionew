@@ -1,29 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import {
+  DEEP_CASE_STUDY_SLUGS,
+  isDeepCaseStudy,
+  type CaseStudyMeta,
+} from "@/lib/case-studies-shared";
+
+export type { CaseStudyMeta };
+export { DEEP_CASE_STUDY_SLUGS, isDeepCaseStudy };
 
 const CONTENT_DIR = path.join(process.cwd(), "content/case-studies");
-
-export type CaseStudyMeta = {
-  title: string;
-  slug: string;
-  client: string;
-  type: "B2C" | "B2B" | string;
-  mockup_scroll?: boolean;
-  dek?: string;
-  summary?: string;
-  role?: string;
-  platform?: string;
-  timeline?: string;
-  scope?: string;
-  v1_priority?: number;
-  format?: string;
-  source?: string;
-  status?: string;
-  team?: string;
-  related?: string | string[];
-  note?: string;
-};
 
 export type CaseStudy = {
   meta: CaseStudyMeta;
@@ -87,11 +74,4 @@ export function getCaseStudy(slug: string): CaseStudy | null {
     },
     content,
   };
-}
-
-/** Deep v1 case studies shipped with full MDX pages first. */
-export const DEEP_CASE_STUDY_SLUGS = ["jio-ai-chat", "payu-partners"] as const;
-
-export function isDeepCaseStudy(slug: string) {
-  return (DEEP_CASE_STUDY_SLUGS as readonly string[]).includes(slug);
 }
