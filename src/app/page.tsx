@@ -1,168 +1,86 @@
-import Image from "next/image";
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { FaqAccordion } from "@/components/faq-accordion";
 import { MegaBrand } from "@/components/mega-brand";
-import { ProjectLink } from "@/components/project-link";
-import { Reveal } from "@/components/reveal";
+import {
+  Button,
+  Container,
+  Placeholder,
+  ProjectShowcase,
+  Section,
+  TextLink,
+} from "@/components/ui";
 import { services, stats } from "@/lib/content";
-import { getAllCaseStudies, isDeepCaseStudy } from "@/lib/case-studies";
+import { getAllCaseStudies } from "@/lib/case-studies";
 import { site } from "@/lib/site";
 
 export default function HomePage() {
-  const featured = getAllCaseStudies().filter((c) => isDeepCaseStudy(c.slug));
-  const more = getAllCaseStudies()
-    .filter((c) => !isDeepCaseStudy(c.slug) && c.slug !== "jio-ai-chat-zolo-approach")
-    .slice(0, 3);
+  const featured = getAllCaseStudies()
+    .filter((c) => c.slug !== "jio-ai-chat-zolo-approach")
+    .slice(0, 5);
 
   return (
-    <div className="relative overflow-hidden" data-page="home" data-scroll-mode="vertical">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_12%_-10%,#f5f5f5_0%,transparent_50%),radial-gradient(ellipse_at_90%_20%,color-mix(in_srgb,var(--accent)_6%,transparent)_0%,transparent_45%),linear-gradient(180deg,#fff_0%,#f5f5f5_42%,#fff_100%)]"
-      />
-
-      {/* Hero — brand-first editorial */}
-      <section className="relative mx-auto flex min-h-[calc(100svh-3.5rem)] max-w-7xl flex-col justify-between px-5 pb-8 pt-16 md:min-h-[calc(100svh-4rem)] md:px-8 md:pb-10 md:pt-24">
-        <Reveal className="max-w-3xl">
-          <p className="font-script text-3xl text-accent md:text-4xl" data-reveal-item>
-            Product design
-          </p>
-          <h1
-            className="mt-4 font-display text-[clamp(3rem,9vw,6.5rem)] leading-[0.92] tracking-[-0.03em] text-ink"
-            data-reveal-item
-          >
+    <div data-page="home" data-scroll-mode="vertical">
+      {/* Hero — brand first, one composition */}
+      <section className="relative flex min-h-[calc(100svh-3.5rem)] flex-col justify-between tablet:min-h-[calc(100svh-4rem)]">
+        <Container className="flex flex-1 flex-col justify-center pb-8 pt-16 tablet:pb-10 tablet:pt-24">
+          <p className="type-label text-accent">Product design</p>
+          <h1 className="type-display mt-5 max-w-5xl text-text-primary">
             Let&apos;s create{" "}
-            <span className="text-accent">ideas</span>
-            <br />
-            <span className="font-script text-[clamp(2.75rem,8vw,5.5rem)] text-ink">
-              together.
-            </span>
+            <span className="text-accent">ideas</span> together.
           </h1>
-          <p
-            className="mt-8 max-w-xl text-lg leading-relaxed text-muted md:text-xl"
-            data-reveal-item
-          >
+          <p className="type-body-lg mt-8 max-w-xl text-text-secondary">
             I help businesses find their voice, shape their identity, and connect
-            with their audience.{" "}
-            <span className="font-medium text-ink">Less talk. More craft.</span>
+            with their audience. Less talk. More craft.
           </p>
-          <div className="mt-10 flex flex-wrap gap-4" data-reveal-item>
-            <Link
-              href="/work"
-              className="inline-flex items-center gap-2 bg-ink px-6 py-3 text-sm tracking-wide text-background transition-colors hover:bg-accent"
-            >
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Button href="/work">
               View work
               <ArrowUpRight size={16} strokeWidth={1.5} />
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 border border-ink/20 px-6 py-3 text-sm tracking-wide text-ink transition-colors hover:border-accent hover:text-accent"
-            >
+            </Button>
+            <Button href="/contact" variant="outline">
               Start a project
-            </Link>
+            </Button>
           </div>
-        </Reveal>
-
-        <div className="relative mt-16 overflow-hidden md:mt-20">
+        </Container>
+        <div className="relative overflow-hidden pb-6">
           <MegaBrand />
         </div>
       </section>
 
-      {/* Featured work */}
-      <section
+      {/* Featured work — editorial showcase, not plain cards */}
+      <Section
         id="work"
-        className="border-t border-ground-strong bg-background"
-        data-scroll-hook="work-strip"
+        label="Featured work"
+        count={featured.length}
+        action={<TextLink href="/work">See all work →</TextLink>}
       >
-        <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
-          <Reveal className="flex flex-wrap items-end justify-between gap-6">
-            <div data-reveal-item>
-              <p className="text-xs uppercase tracking-[0.18em] text-muted">
-                Selected
-              </p>
-              <h2 className="mt-2 font-display text-4xl tracking-tight text-ink md:text-6xl">
-                My works{" "}
-                <span className="text-accent">({featured.length + more.length}+)</span>
-              </h2>
-            </div>
-            <Link
-              href="/work"
-              className="text-sm text-muted underline-offset-4 hover:text-accent hover:underline"
-              data-reveal-item
-            >
-              All projects
-            </Link>
-          </Reveal>
-
-          <Reveal className="mt-6 border-t border-ground-strong">
-            {featured.map((study, i) => (
-              <ProjectLink key={study.slug} study={study} index={i} featured />
-            ))}
-            {more.map((study, i) => (
-              <ProjectLink
-                key={study.slug}
-                study={study}
-                index={featured.length + i}
-              />
-            ))}
-          </Reveal>
+        <div data-scroll-hook="work-strip">
+          <ProjectShowcase studies={featured} />
         </div>
-      </section>
+      </Section>
 
-      {/* About teaser */}
-      <section className="border-t border-ground-strong bg-ground/50">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:grid-cols-2 md:items-center md:gap-16 md:px-8 md:py-28">
-          <Reveal>
-            <div
-              className="relative aspect-[4/5] overflow-hidden bg-ground-strong"
-              data-reveal-item
-            >
-              <Image
-                src="/assets/about/about-section.png"
-                alt=""
-                fill
-                className="object-cover object-[18%_center] grayscale"
-                sizes="(max-width: 768px) 100vw, 45vw"
-              />
-              <span className="absolute bottom-3 left-3 bg-background/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
-                Placeholder · Figma export
-              </span>
-            </div>
-          </Reveal>
-          <Reveal>
-            <p
-              className="text-xs uppercase tracking-[0.18em] text-muted"
-              data-reveal-item
-            >
-              About
-            </p>
-            <h2
-              className="mt-3 font-display text-4xl tracking-tight text-ink md:text-5xl"
-              data-reveal-item
-            >
+      {/* About teaser — midpoint split */}
+      <Section soft>
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+          <div className="relative aspect-[4/5] overflow-hidden bg-surface-primary">
+            <Placeholder kind="portrait" fill />
+          </div>
+          <div>
+            <p className="type-label text-text-secondary">About</p>
+            <h2 className="type-h2 mt-3 text-text-primary">
               Hi, I&apos;m {site.name}
             </h2>
-            <p
-              className="mt-2 text-sm uppercase tracking-[0.14em] text-soft"
-              data-reveal-item
-            >
+            <p className="type-small mt-3 text-text-secondary">
               Lead product designer · Founder, Plux Studio
             </p>
-            <blockquote
-              className="mt-8 border-l-2 border-accent pl-5 font-display text-2xl leading-snug tracking-tight text-ink md:text-3xl"
-              data-reveal-item
-            >
+            <blockquote className="type-body-lg mt-8 border-l-2 border-accent pl-5 text-text-primary">
               Good design is never just decoration — it&apos;s how people
               understand, remember, and trust your brand.{" "}
               <span className="text-accent">
                 I make sure every detail tells the right story.
               </span>
             </blockquote>
-            <p
-              className="mt-8 max-w-lg text-lg leading-relaxed text-muted"
-              data-reveal-item
-            >
+            <p className="type-body mt-8 max-w-lg text-text-secondary">
               My journey started in graphic design long before product. Years of
               branding, freelance, and college web work built the foundation —
               now applied to platforms at national scale, and through{" "}
@@ -170,145 +88,92 @@ export default function HomePage() {
                 href={site.pluxUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-ink underline decoration-accent/50 underline-offset-4 hover:text-accent"
+                className="text-text-primary underline decoration-accent/50 underline-offset-4 hover:text-accent"
               >
                 Plux Studio
               </a>
               .
             </p>
-            <Link
-              href="/about"
-              className="mt-8 inline-flex items-center gap-2 text-sm text-ink hover:text-accent"
-              data-reveal-item
-            >
+            <TextLink href="/about" className="mt-8 inline-flex items-center gap-2">
               About me
               <ArrowUpRight size={16} strokeWidth={1.5} />
-            </Link>
-          </Reveal>
+            </TextLink>
+          </div>
         </div>
-      </section>
+      </Section>
 
       {/* Stats */}
-      <section className="border-t border-ground-strong bg-background">
-        <div className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">
-          <Reveal>
-            <p
-              className="max-w-xl text-sm text-muted md:text-base"
-              data-reveal-item
-            >
-              Some numbers I&apos;m proud of — reflective of partnerships and
-              shipped work. Figures refined from the live site&apos;s empty
-              counters; confirm before launch.
-            </p>
-            <dl className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-              {stats.map((stat) => (
-                <div key={stat.label} data-reveal-item>
-                  <dt className="sr-only">{stat.label}</dt>
-                  <dd className="font-script text-6xl leading-none text-ink md:text-7xl">
-                    {stat.value}
-                  </dd>
-                  <p className="mt-3 text-sm font-medium uppercase tracking-[0.12em] text-ink">
-                    {stat.label}
-                  </p>
-                  <p className="mt-1 text-sm text-soft">{stat.note}</p>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
-        </div>
-      </section>
+      <Section>
+        <p className="type-body max-w-xl text-text-secondary">
+          Some numbers I&apos;m proud of — reflective of partnerships and shipped
+          work.
+        </p>
+        <dl className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label}>
+              <dt className="sr-only">{stat.label}</dt>
+              <dd className="type-h2 text-text-primary">{stat.value}</dd>
+              <p className="type-label mt-3 text-text-primary">{stat.label}</p>
+              <p className="type-small mt-1 text-text-secondary">{stat.note}</p>
+            </div>
+          ))}
+        </dl>
+      </Section>
 
       {/* Services */}
-      <section className="border-t border-ground-strong">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:grid-cols-[0.9fr_1.1fr] md:gap-16 md:px-8 md:py-28">
-          <Reveal>
-            <p
-              className="text-xs uppercase tracking-[0.18em] text-muted"
-              data-reveal-item
-            >
-              Services
-            </p>
-            <h2
-              className="mt-3 font-display text-4xl tracking-tight text-ink md:text-5xl"
-              data-reveal-item
-            >
-              From strategy to execution
+      <Section label="Services" count={services.length} soft>
+        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+          <div>
+            <h2 className="type-h2 text-text-primary">
+              A focused practice spanning product, identity and craft.
             </h2>
-            <p className="mt-5 text-lg text-muted" data-reveal-item>
+            <p className="type-body mt-5 text-text-secondary">
               Help brands move people, spark action, and stand out — digital,
               identity, and production under one craft standard.
             </p>
-            <div
-              className="relative mt-10 aspect-[4/3] overflow-hidden bg-ground"
-              data-reveal-item
-            >
-              <Image
-                src="/assets/services/services.png"
-                alt=""
-                fill
-                className="object-cover grayscale"
-                sizes="(max-width: 768px) 100vw, 40vw"
-              />
-              <span className="absolute bottom-3 left-3 bg-background/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
-                Placeholder
-              </span>
+            <div className="relative mt-10 aspect-[4/3] overflow-hidden bg-surface-primary">
+              <Placeholder kind="4x3" fill />
             </div>
-          </Reveal>
-          <Reveal className="flex flex-col divide-y divide-ground-strong border-y border-ground-strong">
+          </div>
+          <div className="flex flex-col divide-y divide-border-default border-y border-border-default">
             {services.map((service, i) => (
-              <div key={service.title} className="py-8" data-reveal-item>
-                <p className="font-mono text-xs text-accent">
+              <div key={service.title} className="py-8">
+                <p className="type-label text-accent">
                   {String(i + 1).padStart(2, "0")}
                 </p>
-                <h3 className="mt-2 font-display text-3xl tracking-tight text-ink">
-                  {service.title}
-                </h3>
-                <p className="mt-3 max-w-xl text-muted">{service.body}</p>
+                <h3 className="type-h3 mt-2 text-text-primary">{service.title}</h3>
+                <p className="type-body mt-3 max-w-xl text-text-secondary">
+                  {service.body}
+                </p>
               </div>
             ))}
-          </Reveal>
+          </div>
         </div>
-      </section>
+      </Section>
 
       {/* FAQ */}
-      <section className="border-t border-ground-strong bg-background">
-        <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
-          <Reveal className="mb-12 max-w-2xl">
-            <p
-              className="text-xs uppercase tracking-[0.18em] text-muted"
-              data-reveal-item
-            >
-              FAQs
-            </p>
-            <h2
-              className="mt-3 font-display text-4xl tracking-tight text-ink md:text-5xl"
-              data-reveal-item
-            >
-              Quick answers
-            </h2>
-          </Reveal>
-          <FaqAccordion />
-        </div>
-      </section>
+      <Section label="FAQs">
+        <h2 className="type-h2 mb-12 max-w-2xl text-text-primary">
+          Quick answers
+        </h2>
+        <FaqAccordion />
+      </Section>
 
       {/* Contact band */}
-      <section className="border-t border-ground-strong bg-ink text-background">
-        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-5 py-20 md:flex-row md:items-end md:justify-between md:px-8 md:py-28">
+      <Section inverse>
+        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="font-script text-3xl text-accent">Let&apos;s work together</p>
-            <h2 className="mt-3 max-w-xl font-display text-4xl tracking-tight md:text-6xl">
+            <p className="type-label text-accent">Let&apos;s work together</p>
+            <h2 className="type-h2 mt-3 max-w-xl text-text-inverse">
               Turn concepts into precise product experiences.
             </h2>
           </div>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 bg-accent px-7 py-3.5 text-sm tracking-wide text-accent-foreground transition-opacity hover:opacity-90"
-          >
+          <Button href="/contact" variant="accent">
             Get in touch
             <ArrowUpRight size={16} strokeWidth={1.5} />
-          </Link>
+          </Button>
         </div>
-      </section>
+      </Section>
     </div>
   );
 }
