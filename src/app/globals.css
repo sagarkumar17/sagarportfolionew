@@ -337,6 +337,47 @@ html[data-preloader="active"] {
   overflow: hidden;
 }
 
+/* ─── Motion · Home hero (section 2) ─── */
+.hero-type {
+  opacity: var(--sop, 1);
+  filter: blur(var(--sblur, 0px));
+  transform: translate3d(
+    calc(var(--px, 0px) + var(--sx, 0px)),
+    calc(var(--py, 0px) + var(--sy, 0px)),
+    0
+  );
+}
+
+.hero-module {
+  opacity: var(--sop, 0.92);
+  filter: blur(var(--sblur, 0px));
+  transform: translate3d(
+    calc(var(--px, 0px) + var(--sx, 0px)),
+    calc(var(--py, 0px) + var(--sy, 0px)),
+    0
+  );
+}
+
+/* Avoid flash before JS owns opacity (boot → animating/ready) */
+[data-home-hero][data-hero-state="enter"] .hero-module {
+  opacity: 0;
+}
+
+[data-home-hero][data-hero-state="enter"] .hero-type [data-hero-char] {
+  opacity: 0;
+}
+
+[data-home-hero][data-hero-state="enter"] [data-hero-bridge],
+[data-home-hero][data-hero-state="enter"] [data-hero-meta] {
+  opacity: 0;
+}
+
+.hero-module:hover {
+  /* Maël: lift via opacity / fill only — never scale */
+  opacity: 1;
+  filter: blur(0px);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -352,5 +393,12 @@ html[data-preloader="active"] {
 
   html[data-preloader="active"] {
     overflow: auto;
+  }
+
+  .hero-type,
+  .hero-module {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
   }
 }

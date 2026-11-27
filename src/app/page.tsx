@@ -1,9 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
 import { FaqAccordion } from "@/components/faq-accordion";
-import { MegaBrand } from "@/components/mega-brand";
+import { HomeHero } from "@/components/home-hero";
 import {
   Button,
-  Container,
   Placeholder,
   ProjectShowcase,
   Section,
@@ -20,32 +19,8 @@ export default function HomePage() {
 
   return (
     <div data-page="home" data-scroll-mode="vertical">
-      {/* Hero — brand first, one composition */}
-      <section className="relative flex min-h-[calc(100svh-3.5rem)] flex-col justify-between tablet:min-h-[calc(100svh-4rem)]">
-        <Container className="flex flex-1 flex-col justify-center pb-8 pt-16 tablet:pb-10 tablet:pt-24">
-          <p className="type-label text-accent">Product design</p>
-          <h1 className="type-display mt-5 max-w-5xl text-text-primary">
-            Let&apos;s create{" "}
-            <span className="text-accent">ideas</span> together.
-          </h1>
-          <p className="type-body-lg mt-8 max-w-xl text-text-secondary">
-            I help businesses find their voice, shape their identity, and connect
-            with their audience. Less talk. More craft.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Button href="/work">
-              View work
-              <ArrowUpRight size={16} strokeWidth={1.5} />
-            </Button>
-            <Button href="/contact" variant="outline">
-              Start a project
-            </Button>
-          </div>
-        </Container>
-        <div className="relative overflow-hidden pb-6">
-          <MegaBrand />
-        </div>
-      </section>
+      {/* Hero — kinetic type + modular product UI */}
+      <HomeHero />
 
       {/* Featured work — editorial showcase, not plain cards */}
       <Section

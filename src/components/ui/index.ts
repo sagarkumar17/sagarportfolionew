@@ -12,5 +12,6 @@ export { SoundLink } from "./sound-link";
 export { Preloader } from "./preloader";
 export type { PreloaderProps } from "./preloader";
 export { PreloaderMotionDemo } from "./preloader-demo";
+export { HeroMotionDemo } from "./hero-motion-demo";
 export { Placeholder, PlaceholderBlock } from "./placeholder";
 export type { PlaceholderKind } from "./placeholder";
