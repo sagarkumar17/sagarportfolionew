@@ -8,7 +8,7 @@ import { site } from "@/lib/site";
 
 /**
  * Living styleguide demo — Motion · Preloader.
- * Replayable framed preview of section 0 (opacity/blur, sound-gated whoosh).
+ * Replayable framed preview of section 0 (letter rise + % + wipe).
  */
 export function PreloaderMotionDemo() {
   const [replayKey, setReplayKey] = useState(0);
@@ -22,17 +22,17 @@ export function PreloaderMotionDemo() {
   return (
     <div>
       <p className="type-body-lg max-w-2xl text-text-secondary">
-        Short brand hold → opacity/blur fade → page reveal. Maël calm only
-        (no scale). Whoosh plays when Sound is on.{" "}
+        Name-only letter rise → corner 0→100% + thin bar → upward wipe. Maël calm
+        (no scale). Whoosh when Sound is on.{" "}
         <code className="type-small text-text-primary">prefers-reduced-motion</code>{" "}
         skips straight to ready. Wall-clock ≈ {PRELOADER_TOTAL_S.toFixed(1)}s.
       </p>
 
       <dl className="mt-10 grid gap-6 sm:grid-cols-2 desktop:grid-cols-4">
         {[
-          ["Enter", "Brand opacity + blur clear"],
-          ["Hold", "Quiet wordmark beat"],
-          ["Exit", "Blur/fade + overlay out"],
+          ["Name", "SAGAR. letter mask / y-rise"],
+          ["Progress", "Corner % + thin bar 0→100"],
+          ["Exit", "Upward wipe → page"],
           ["Sound", "Whoosh if unmuted"],
         ].map(([k, v]) => (
           <div key={k}>
@@ -47,7 +47,8 @@ export function PreloaderMotionDemo() {
           Replay preloader
         </Button>
         <p className="type-small text-text-secondary">
-          Enable Sound in the nav to hear the exit whoosh.
+          Enable Sound in the nav to hear the exit whoosh. Site skips after first
+          view (clear session or hard-refresh in a new tab to re-trigger).
         </p>
       </div>
 
@@ -60,7 +61,7 @@ export function PreloaderMotionDemo() {
             <span className="text-accent">.</span>
           </p>
           <p className="type-body max-w-sm text-text-secondary">
-            Content sits under the overlay — enter is a soft reveal, not a bounce.
+            Content sits under the overlay — wipe exits upward, not a bounce.
           </p>
         </div>
 

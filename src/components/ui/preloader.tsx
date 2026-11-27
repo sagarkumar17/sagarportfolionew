@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useSound } from "@/components/sound-provider";
 import { site } from "@/lib/site";
@@ -13,6 +13,9 @@ import {
 } from "@/lib/preloader-motion";
 
 const SESSION_KEY = "sagar-preloader";
+
+/** Brand shown on the loader — name only, no tagline. */
+const BRAND = `${site.shortName.toUpperCase()}.`;
 
 export type PreloaderProps = {
   /**
@@ -27,9 +30,10 @@ export type PreloaderProps = {
 };
 
 /**
- * Section 0 — Preloader + page enter.
- * Maël calm: opacity + blur only (no scale). Sound-gated whoosh on exit.
- * Reduced-motion → skip straight to ready. Site total ~1.1s.
+ * Section 0 — Preloader + page enter (Bezel-style).
+ * Name letter-rise + corner % + thin bar → upward wipe.
+ * Maël calm: no scale. Sound-gated whoosh on exit.
+ * Reduced-motion → skip straight to ready. Site total ~2.5s.
  */
 export function Preloader({
   demo = false,
@@ -38,18 +42,28 @@ export function Preloader({
   replayKey = 0,
 }: PreloaderProps) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const brandRef = useRef<HTMLParagraphElement>(null);
+  const nameRef = useRef<HTMLDivElement>(null);
+  const counterRef = useRef<HTMLSpanElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
   const onCompleteRef = useRef(onComplete);
   const { play } = useSound();
   const playRef = useRef(play);
   const [visible, setVisible] = useState(true);
 
-  onCompleteRef.current = onComplete;
-  playRef.current = play;
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+    playRef.current = play;
+  }, [onComplete, play]);
 
   useEffect(() => {
     let cancelled = false;
     let tl: gsap.core.Timeline | null = null;
+
+    const hide = () => {
+      startTransition(() => {
+        if (!cancelled) setVisible(false);
+      });
+    };
 
     const finish = () => {
       if (cancelled) return;
@@ -61,7 +75,7 @@ export function Preloader({
           /* private mode */
         }
       }
-      setVisible(false);
+      hide();
       onCompleteRef.current?.();
     };
 
@@ -69,7 +83,7 @@ export function Preloader({
       try {
         if (sessionStorage.getItem(SESSION_KEY) === "1") {
           markPageReady();
-          setVisible(false);
+          hide();
           onCompleteRef.current?.();
           return;
         }
@@ -84,54 +98,73 @@ export function Preloader({
     }
 
     const root = rootRef.current;
-    const brand = brandRef.current;
-    if (!root || !brand) return;
+    const nameEl = nameRef.current;
+    const counterEl = counterRef.current;
+    const barEl = barRef.current;
+    if (!root || !nameEl || !counterEl || !barEl) return;
 
     if (!demo) markPreloaderActive();
 
-    gsap.set(brand, { opacity: 0, filter: "blur(12px)" });
-    gsap.set(root, { opacity: 1 });
+    const chars = Array.from(
+      nameEl.querySelectorAll<HTMLElement>("[data-pl-char]"),
+    );
+    const progress = { value: 0 };
+
+    gsap.set(root, { yPercent: 0, opacity: 1 });
+    gsap.set(chars, { yPercent: 110 });
+    gsap.set(barEl, { clipPath: "inset(0 100% 0 0)" });
+    counterEl.textContent = "0%";
 
     if (!demo) {
       const main = document.querySelector("main");
-      if (main) {
-        gsap.set(main, { opacity: 0.72, filter: "blur(6px)" });
-      }
+      if (main) gsap.set(main, { opacity: 0.88 });
     }
 
     tl = gsap.timeline({
       onComplete: finish,
     });
 
-    tl.to(brand, {
-      opacity: 1,
-      filter: "blur(0px)",
-      duration: PRELOADER.enter,
-      ease: "power2.out",
-    })
-      .to({}, { duration: PRELOADER.hold })
-      .add(() => {
-        playRef.current("whoosh");
-      })
-      .to(
-        brand,
-        {
-          opacity: 0,
-          filter: "blur(10px)",
-          duration: PRELOADER.brandExit,
-          ease: "power2.in",
-        },
-        "exit",
-      )
-      .to(
-        root,
-        {
-          opacity: 0,
-          duration: PRELOADER.overlayExit,
-          ease: "power2.inOut",
-        },
-        "exit+=0.04",
-      );
+    // Progress 0 → 100 (counter + bar via clip — no scale)
+    tl.to(progress, {
+      value: 100,
+      duration: PRELOADER.progress,
+      ease: "power2.inOut",
+      onUpdate: () => {
+        const n = Math.round(progress.value);
+        counterEl.textContent = `${n}%`;
+        const remaining = 100 - progress.value;
+        gsap.set(barEl, {
+          clipPath: `inset(0 ${remaining}% 0 0)`,
+        });
+      },
+    });
+
+    // Letter rise (mask via overflow-hidden parent)
+    tl.to(
+      chars,
+      {
+        yPercent: 0,
+        duration: PRELOADER.letterReveal,
+        stagger: PRELOADER.letterStagger,
+        ease: "power3.out",
+      },
+      PRELOADER.letterStart,
+    );
+
+    // Beat at 100%, then whoosh + upward wipe
+    tl.to({}, { duration: PRELOADER.hold });
+    tl.add(() => {
+      playRef.current("whoosh");
+    });
+    tl.to(
+      root,
+      {
+        yPercent: -100,
+        duration: PRELOADER.wipe,
+        ease: "power3.inOut",
+      },
+      "exit",
+    );
 
     if (!demo) {
       const main = document.querySelector("main");
@@ -140,11 +173,10 @@ export function Preloader({
           main,
           {
             opacity: 1,
-            filter: "blur(0px)",
             duration: PRELOADER.pageEnter,
             ease: "power2.out",
           },
-          "exit+=0.08",
+          "exit+=0.12",
         );
       }
     }
@@ -157,24 +189,68 @@ export function Preloader({
 
   if (!visible) return null;
 
+  const letters = BRAND.split("").map((ch, i) => {
+    const isAccent = ch === ".";
+    return (
+      <span key={`${ch}-${i}`} className="inline-block overflow-hidden">
+        <span
+          data-pl-char
+          className={cn(
+            "inline-block will-change-transform",
+            isAccent && "text-accent",
+          )}
+        >
+          {ch === " " ? "\u00A0" : ch}
+        </span>
+      </span>
+    );
+  });
+
   return (
     <div
       ref={rootRef}
       className={cn(
-        "z-[100] flex items-center justify-center bg-surface-secondary",
+        "z-[100] bg-surface-secondary text-text-primary",
         demo ? "absolute inset-0" : "fixed inset-0",
         className,
       )}
       aria-hidden
       data-preloader-shell={demo ? "demo" : "site"}
     >
-      <p
-        ref={brandRef}
-        className="type-display text-text-primary will-change-[opacity,filter]"
+      {/* Centered brand — letter reveal only */}
+      <div className="flex h-full w-full items-center justify-center px-6">
+        <div
+          ref={nameRef}
+          className="type-display flex select-none tracking-tight"
+        >
+          {letters}
+        </div>
+      </div>
+
+      {/* Bezel-style corner counter */}
+      <div
+        className={cn(
+          "pointer-events-none absolute font-sans font-semibold tabular-nums tracking-tight text-text-primary",
+          demo
+            ? "bottom-4 right-4 text-3xl tablet:text-4xl"
+            : "bottom-8 right-6 text-5xl tablet:bottom-10 tablet:right-10 tablet:text-7xl desktop:text-8xl",
+        )}
       >
-        {site.shortName.toUpperCase()}
-        <span className="text-accent">.</span>
-      </p>
+        <span ref={counterRef}>0%</span>
+      </div>
+
+      {/* Thin progress bar — clip reveal (Maël: no scale) */}
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-x-0 bottom-0 bg-border-default",
+          demo ? "h-px" : "h-[2px]",
+        )}
+      >
+        <div
+          ref={barRef}
+          className="h-full w-full bg-text-primary will-change-[clip-path]"
+        />
+      </div>
     </div>
   );
 }

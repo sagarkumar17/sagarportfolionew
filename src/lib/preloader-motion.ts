@@ -1,20 +1,24 @@
 /** Shared timing for site Preloader + styleguide demo (section 0). */
 export const PRELOADER = {
-  /** Brand fade-in (opacity + blur clear) */
-  enter: 0.32,
-  /** Quiet hold on wordmark */
-  hold: 0.28,
-  /** Brand blur/fade out */
-  brandExit: 0.38,
-  /** Overlay fade revealing the page */
-  overlayExit: 0.42,
-  /** Soft page reveal under the overlay */
-  pageEnter: 0.45,
+  /** 0→100% counter + bar (soft ease) */
+  progress: 1.45,
+  /** Letter y-rise duration */
+  letterReveal: 0.9,
+  /** Stagger between letters */
+  letterStagger: 0.038,
+  /** When letter reveal starts relative to progress */
+  letterStart: 0.12,
+  /** Quiet beat after 100% before wipe */
+  hold: 0.22,
+  /** Upward wipe exit */
+  wipe: 0.8,
+  /** Soft page settle under the wipe (site only) */
+  pageEnter: 0.5,
 } as const;
 
-/** Approximate wall-clock when reduced-motion is off (~1.1s). */
+/** Approximate wall-clock when reduced-motion is off (~2.5s). */
 export const PRELOADER_TOTAL_S =
-  PRELOADER.enter + PRELOADER.hold + PRELOADER.overlayExit;
+  PRELOADER.progress + PRELOADER.hold + PRELOADER.wipe;
 
 export function prefersReducedMotion(): boolean {
   if (typeof window === "undefined") return false;
