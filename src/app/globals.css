@@ -82,8 +82,90 @@
   --color-static-black: var(--static-black);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-nunito), var(--font-inter), ui-sans-serif, system-ui,
+    sans-serif;
 }
+
+.font-display {
+  font-family: var(--font-nunito), var(--font-inter), ui-sans-serif, system-ui,
+    sans-serif;
+  font-optical-sizing: auto;
+}
+
+/* Hero marker pulse — alive, not flashy */
+@keyframes hero-pin-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgb(220 22 24 / 0.45);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgb(220 22 24 / 0.12);
+    opacity: 0.88;
+  }
+}
+
+.hero-pin-pulse {
+  animation: hero-pin-pulse 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-pin-pulse {
+    animation: none;
+  }
+}
+
+/* Lightweight bird silhouettes drifting across the plate */
+.hero-birds::before,
+.hero-birds::after {
+  content: "";
+  position: absolute;
+  top: 18%;
+  width: 7px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgb(15 23 42 / 0.35);
+  box-shadow:
+    18px -6px 0 -1px rgb(15 23 42 / 0.28),
+    34px 4px 0 -1.5px rgb(15 23 42 / 0.22),
+    52px -2px 0 -1px rgb(15 23 42 / 0.2);
+  animation: hero-birds-drift 42s linear infinite;
+}
+
+.hero-birds::after {
+  top: 28%;
+  left: 40%;
+  opacity: 0.7;
+  animation-duration: 56s;
+  animation-direction: reverse;
+}
+
+@keyframes hero-birds-drift {
+  from {
+    transform: translateX(-12vw);
+  }
+  to {
+    transform: translateX(110vw);
+  }
+}
+
+.dark .hero-birds::before,
+.dark .hero-birds::after {
+  background: rgb(248 250 252 / 0.35);
+  box-shadow:
+    18px -6px 0 -1px rgb(248 250 252 / 0.28),
+    34px 4px 0 -1.5px rgb(248 250 252 / 0.22),
+    52px -2px 0 -1px rgb(248 250 252 / 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-birds::before,
+  .hero-birds::after {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
 
 html {
   scroll-behavior: auto;

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Nunito } from "next/font/google";
 import { Preloader } from "@/components/ui/preloader";
 import { SiteChrome } from "@/components/site-chrome";
 import { SiteFooter } from "@/components/site-footer";
@@ -10,15 +10,21 @@ import { site } from "@/lib/site";
 import "./globals.css";
 
 /*
-  Typography: Inter only — Maël Blanc styleguide.
-  Variable Inter (optical size) matches Framer’s Inter Display feel at large sizes.
-  Chrome: James-system dock + top-right cluster + SFX (SiteChrome).
+  Body: Inter (Maël). Hero display: Nunito (heavy rounded) for James-system fidelity.
+  Chrome: dock + top-right cluster + SFX (SiteChrome).
 */
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
+});
+
+const nunito = Nunito({
+  variable: "--font-nunito",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -40,7 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-axis="vertical"
-      className={`${inter.variable} h-full antialiased`}
+      className={`${inter.variable} ${nunito.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

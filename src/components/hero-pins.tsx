@@ -1,52 +1,81 @@
 "use client";
 
-import Link from "next/link";
-import { HERO_PINS } from "@/lib/hero-pins";
-import type { HeroPin } from "@/lib/hero-pins";
+import { HERO_LOCATIONS, type HeroLocation } from "@/lib/hero-locations";
 import { cn } from "@/lib/cn";
 
-function PinFace({ pin }: { pin: HeroPin }) {
+type HeroPinsProps = {
+  className?: string;
+  activeId?: string | null;
+  onSelect?: (location: HeroLocation) => void;
+  onHoverChange?: (hovering: boolean) => void;
+};
+
+function MarkerFace({ location }: { location: HeroLocation }) {
   return (
     <>
       <span
         className={cn(
-          "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold",
-          pin.accent
-            ? "bg-accent text-accent-foreground"
-            : "bg-white/18 text-white ring-1 ring-white/25",
+          "relative inline-flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full",
+          location.accent ? "bg-accent" : "bg-white",
         )}
       >
-        {pin.initial ?? pin.label.slice(0, 1)}
+        {location.logoSrc ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={location.logoSrc}
+            alt=""
+            className="h-[18px] w-[18px] object-contain"
+            draggable={false}
+          />
+        ) : (
+          <span className="text-[10px] font-semibold text-accent-foreground">
+            {location.initial ?? location.label.slice(0, 1)}
+          </span>
+        )}
       </span>
       <span className="min-w-0 pr-0.5 text-left">
         <span className="block truncate text-[12px] font-semibold leading-tight text-white">
-          {pin.label}
+          {location.label}
         </span>
         <span className="block truncate text-[10px] leading-tight text-white/70">
-          {pin.meta}
+          {location.years}
         </span>
       </span>
     </>
   );
 }
 
-function PinBody({ pin }: { pin: HeroPin }) {
+function MarkerBody({
+  location,
+  active,
+}: {
+  location: HeroLocation;
+  active: boolean;
+}) {
   return (
     <span className="hero-pin group/pin flex flex-col items-center">
       <span
         className={cn(
-          "inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/25 bg-black/45 py-1.5 pl-1.5 pr-3 shadow-[0_10px_30px_rgb(0_0_0_/0.35)] backdrop-blur-md transition-[opacity,transform,background-color,border-color] duration-300 ease-[cubic-bezier(.22,1,.36,1)]",
-          "hover:border-white/45 hover:bg-black/60",
+          "inline-flex items-center gap-2 rounded-full border bg-black/45 py-1.5 pl-1.5 pr-3 shadow-[0_10px_30px_rgb(0_0_0_/0.35)] backdrop-blur-md transition-[opacity,transform,background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(.22,1,.36,1)]",
+          active
+            ? "border-white/55 bg-black/70 shadow-[0_14px_40px_rgb(0_0_0_/0.5)] -translate-y-1"
+            : "border-white/25 group-hover/pin:border-white/45 group-hover/pin:bg-black/60 group-hover/pin:-translate-y-1",
         )}
       >
-        <PinFace pin={pin} />
+        <MarkerFace location={location} />
       </span>
       <span
-        className="mt-0 h-5 w-px bg-white/55 transition-[height,opacity] duration-300 group-hover/pin:h-8"
+        className={cn(
+          "mt-0 w-px bg-white/55 transition-[height,opacity] duration-300",
+          active ? "h-8" : "h-5 group-hover/pin:h-8",
+        )}
         aria-hidden
       />
       <span
-        className="relative h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_0_3px_rgb(220_22_24_/0.55)] transition-[box-shadow] duration-300 group-hover/pin:shadow-[0_0_0_5px_rgb(220_22_24_/0.4)]"
+        className={cn(
+          "hero-pin-pulse relative h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_0_3px_rgb(220_22_24_/0.55)]",
+          active && "shadow-[0_0_0_5px_rgb(220_22_24_/0.45)]",
+        )}
         aria-hidden
       />
     </span>
@@ -54,73 +83,44 @@ function PinBody({ pin }: { pin: HeroPin }) {
 }
 
 /**
- * Glass pins over the illustrated plate — James-system markers, Sagar content.
- * Hover: translateY + opacity/fill only (no scale).
+ * Floating company markers — logo + name + years, pulsing pin, Open cursor hotspot.
  */
-export function HeroPins({ className }: { className?: string }) {
+export function HeroPins({
+  className,
+  activeId = null,
+  onSelect,
+  onHoverChange,
+}: HeroPinsProps) {
   return (
     <div className={cn("absolute inset-0 z-40", className)}>
-      {HERO_PINS.map((pin) => {
+      {HERO_LOCATIONS.map((location) => {
         const style = {
-          left: `${pin.x}%`,
-          top: `${pin.y}%`,
+          left: `${location.x}%`,
+          top: `${location.y}%`,
         } as React.CSSProperties;
-
-        const classNamePin =
-          "absolute -translate-x-1/2 -translate-y-full cursor-pointer";
-
-        if (!pin.href) {
-          return (
-            <span
-              key={pin.id}
-              data-hero-pin
-              data-depth={pin.depth}
-              style={style}
-              className={classNamePin}
-            >
-              <PinBody pin={pin} />
-            </span>
-          );
-        }
-
-        const external = pin.href.startsWith("http");
-        if (external) {
-          return (
-            <a
-              key={pin.id}
-              href={pin.href}
-              data-hero-pin
-              data-depth={pin.depth}
-              style={style}
-              className={classNamePin}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <PinBody pin={pin} />
-            </a>
-          );
-        }
+        const active = activeId === location.id;
 
         return (
-          <Link
-            key={pin.id}
-            href={pin.href}
+          <button
+            key={location.id}
+            type="button"
             data-hero-pin
-            data-depth={pin.depth}
+            data-hero-pin-id={location.id}
+            data-depth={location.depth}
             style={style}
-            className={classNamePin}
+            className="absolute -translate-x-1/2 -translate-y-full cursor-none appearance-none border-0 bg-transparent p-0 text-left"
+            aria-label={`Open ${location.label}`}
+            aria-pressed={active}
+            onMouseEnter={() => onHoverChange?.(true)}
+            onMouseLeave={() => onHoverChange?.(false)}
+            onFocus={() => onHoverChange?.(true)}
+            onBlur={() => onHoverChange?.(false)}
+            onClick={() => onSelect?.(location)}
           >
-            <PinBody pin={pin} />
-          </Link>
+            <MarkerBody location={location} active={active} />
+          </button>
         );
       })}
-
-      <p
-        className="pointer-events-none absolute bottom-[20%] right-[10%] hidden rotate-[-8deg] text-[13px] font-medium text-white/80 drop-shadow tablet:block"
-        data-hero-hint
-      >
-        click a place →
-      </p>
     </div>
   );
 }
