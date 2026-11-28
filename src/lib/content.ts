@@ -94,7 +94,7 @@ export const experience: ExperienceItem[] = [
   {
     role: "Founder · Independent designer",
     org: "Plux Studio",
-    period: "2026 — Present",
+    period: "2020 — Present",
     location: "Bangalore",
     href: site.pluxUrl,
     body: "Building Plux as a product-design studio: editorial taste, systems that scale, and high-craft experiences for ambitious teams.",
@@ -102,7 +102,7 @@ export const experience: ExperienceItem[] = [
   {
     role: "Senior / Lead Product Designer",
     org: "Jio Platforms",
-    period: "Jan 2023 — 2026",
+    period: "Jan 2023 — Jul 2026",
     location: "Bangalore",
     body: "Cross-functional product design across consumer platforms — conversational AI, consent, and operations tools used at national scale.",
   },

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Nunito } from "next/font/google";
 import { Preloader } from "@/components/ui/preloader";
+import { SiteChrome } from "@/components/site-chrome";
 import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { SoundProvider } from "@/components/sound-provider";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -10,16 +10,21 @@ import { site } from "@/lib/site";
 import "./globals.css";
 
 /*
-  Typography: Inter only — Maël Blanc styleguide.
-  Variable Inter (optical size) matches Framer’s Inter Display feel at large sizes.
-  Scale: Display 120/72/48 · H2 64/42/34 · H3 40/22/20 · Body LG 26/19/18 ·
-  Body 17/15/15 · Small 14 · Label 11 (weights 400/500/600).
+  Body: Inter (Maël). Hero display: Nunito (heavy rounded) for James-system fidelity.
+  Chrome: dock + top-right cluster + SFX (SiteChrome).
 */
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
+});
+
+const nunito = Nunito({
+  variable: "--font-nunito",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -41,7 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       data-scroll-axis="vertical"
-      className={`${inter.variable} h-full antialiased`}
+      className={`${inter.variable} ${nunito.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -53,8 +58,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SoundProvider>
             <SmoothScroll>
               <Preloader />
-              <SiteHeader />
-              <main className="flex-1 pt-14 tablet:pt-16">{children}</main>
+              <SiteChrome />
+              <main className="flex-1 pb-24">{children}</main>
               <SiteFooter />
             </SmoothScroll>
           </SoundProvider>

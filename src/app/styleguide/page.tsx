@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import {
   Button,
   Container,
+  HeroMotionDemo,
   Placeholder,
   PreloaderMotionDemo,
   ProjectCard,
@@ -296,7 +297,12 @@ export default function StyleguidePage() {
         <PreloaderMotionDemo />
       </Section>
 
-      <Section label="Sound" count={1} soft>
+      {/* Motion · Hero (section 2) */}
+      <Section label="Motion · Hero" count={1} soft>
+        <HeroMotionDemo />
+      </Section>
+
+      <Section label="Sound" count={1}>
         <p className="type-body-lg max-w-2xl text-text-secondary">
           Inspired by gowthamganesan.com. Default muted. Toggle lives in the nav
           next to theme — soft click / whoosh cues and a quiet ambient pad when
