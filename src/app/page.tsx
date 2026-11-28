@@ -11,6 +11,17 @@ export default function HomePage() {
     <div data-page="home" data-scroll-mode="vertical">
       <HomeHero />
 
+      {/* Journey anchor for dock — full chapter later */}
+      <section
+        id="journey"
+        className="relative z-10 border-t border-border-default bg-background px-5 py-16 tablet:px-8"
+      >
+        <p className="type-label text-text-secondary">Journey</p>
+        <h2 className="type-h2 mt-3 max-w-2xl text-text-primary">
+          Career path chapter lands next.
+        </h2>
+      </section>
+
       {/* Soft handoff after fly-in — text only, no grey placeholder panels */}
       <section
         id="work"

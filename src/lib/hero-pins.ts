@@ -1,4 +1,4 @@
-/** Sagar project pins for the hero plate — never James employers. */
+/** Sagar landmark pins — tied to distinct buildings on the hero plate. */
 
 export type HeroPin = {
   id: string;
@@ -14,43 +14,55 @@ export type HeroPin = {
   initial?: string;
 };
 
-/** Positions tuned to plate.jpg midground terraces / hills. */
+/**
+ * Positions tuned to plate-day/night v3 architecture (tight camera):
+ * Plux loft (left) · Jio tower · PayU cylinder · Infosys campus · SADAD bank · Me.
+ */
 export const HERO_PINS: HeroPin[] = [
   {
     id: "plux",
     label: "Plux",
     meta: "Studio",
     href: "https://pluxstudio.in/",
-    x: 22,
-    y: 46,
+    x: 20,
+    y: 50,
     depth: 2,
     accent: true,
   },
   {
     id: "jio",
     label: "Jio",
-    meta: "AI Chat",
+    meta: "Campus",
     href: "/work/jio-ai-chat",
-    x: 58,
-    y: 32,
+    x: 38,
+    y: 28,
     depth: 3,
   },
   {
     id: "payu",
     label: "PayU",
-    meta: "Super App",
+    meta: "Fintech",
     href: "/work/payu-super-app",
-    x: 72,
-    y: 44,
+    x: 52,
+    y: 36,
     depth: 2,
   },
   {
-    id: "cn",
-    label: "CN",
-    meta: "Express",
-    href: "/work/cn-express-pass",
-    x: 46,
-    y: 52,
+    id: "infosys",
+    label: "Infosys",
+    meta: "Campus",
+    href: "/work",
+    x: 66,
+    y: 38,
+    depth: 2,
+  },
+  {
+    id: "sadad",
+    label: "SADAD",
+    meta: "Finance",
+    href: "/work",
+    x: 88,
+    y: 46,
     depth: 1,
   },
   {
@@ -58,8 +70,8 @@ export const HERO_PINS: HeroPin[] = [
     label: "Me",
     meta: "Bangalore",
     href: "/about",
-    x: 34,
-    y: 66,
+    x: 14,
+    y: 76,
     depth: 1,
     initial: "SK",
   },

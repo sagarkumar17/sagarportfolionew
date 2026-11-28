@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HeroPins } from "@/components/hero-pins";
+import { useTheme } from "@/components/theme-provider";
 import { site } from "@/lib/site";
 import {
   HERO,
@@ -21,14 +22,17 @@ type HomeHeroProps = {
 };
 
 /**
- * James-system hero: full-viewport illustrated plate + pins + fly-in.
- * Plate is an original Sagar asset (not James art). Never blank white.
+ * James-system hero: dual day/night illustrated plates + pins + fly-in.
+ * Artwork is original Sagar (character + dog + landmarks) — not James assets.
+ * Theme swaps real plates (no brightness filter).
  */
 export function HomeHero({
   demo = false,
   className,
   replayKey = 0,
 }: HomeHeroProps) {
+  const { resolved } = useTheme();
+  const isNight = resolved === "dark";
   const rootRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const camRef = useRef<HTMLDivElement>(null);
@@ -74,7 +78,7 @@ export function HomeHero({
       }
 
       root.dataset.heroState = "animating";
-      gsap.set(lines, { y: 36, opacity: 0 });
+      gsap.set(lines, { y: 40, opacity: 0 });
       if (accent) {
         gsap.set(accent, {
           scaleX: 0,
@@ -132,7 +136,6 @@ export function HomeHero({
     const setupFlyIn = () => {
       if (demo || reduced || cancelled) return;
 
-      // CSS sticky stage — scrub camera only (avoids pin height bugs)
       scrollTrigger = ScrollTrigger.create({
         trigger: root,
         start: "top top",
@@ -183,12 +186,17 @@ export function HomeHero({
     };
   }, [demo, replayKey]);
 
+  /* Cover framing: bias slightly low so landmarks + character stay in-viewport */
+  const plateClass =
+    "pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_62%] transition-opacity duration-700 ease-[cubic-bezier(.22,1,.36,1)]";
+
   return (
     <section
       ref={rootRef}
       id="top"
       data-home-hero
       data-hero-state="enter"
+      data-hero-theme={isNight ? "night" : "day"}
       aria-label="Introduction"
       className={cn(
         "hero-stage relative isolate",
@@ -199,95 +207,100 @@ export function HomeHero({
       <div
         ref={stageRef}
         className={cn(
-          // Opaque fallback so we never flash white if plate lags
-          "relative overflow-hidden bg-[#1c1814]",
-          demo
-            ? "h-full min-h-[480px]"
-            : "sticky top-0 h-svh w-full",
+          "relative overflow-hidden bg-[#0b1220]",
+          demo ? "h-full min-h-[480px]" : "sticky top-0 h-svh w-full",
         )}
       >
-        {/* Camera */}
         <div
           ref={camRef}
-          className="absolute inset-0 origin-[50%_58%] will-change-transform"
+          className="absolute inset-0 origin-[50%_62%] will-change-transform"
           data-hero-cam
         >
+          {/* Dual plates — real day/night artwork crossfade */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/assets/hero/plate.jpg"
+            src="/assets/hero/plate-day.jpg"
             alt=""
-            width={1280}
-            height={720}
+            width={1920}
+            height={1080}
             decoding="async"
             fetchPriority="high"
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_45%] dark:brightness-[0.72] dark:saturate-[0.92]"
+            className={cn(plateClass, isNight ? "opacity-0" : "opacity-100")}
             draggable={false}
           />
-          {/* Depth veil — readable type without killing the plate */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/assets/hero/plate-night.jpg"
+            alt=""
+            width={1920}
+            height={1080}
+            decoding="async"
+            fetchPriority="high"
+            className={cn(plateClass, isNight ? "opacity-100" : "opacity-0")}
+            draggable={false}
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/25"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/50 via-black/15 to-transparent"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/20"
           />
           <HeroPins />
         </div>
 
-        {/* Top-left type */}
+        {/* Heavy rounded display type */}
         <div
           ref={typeRef}
           className={cn(
-            // pointer-events-none so pins under/near the type column stay clickable
-            "pointer-events-none relative z-30 flex h-full max-w-[38rem] flex-col justify-start px-5 pt-[max(5.5rem,12vh)] text-white tablet:px-10 tablet:pt-[max(6rem,14vh)]",
+            "pointer-events-none relative z-30 flex h-full max-w-[40rem] flex-col justify-start px-5 pt-[max(5rem,11vh)] text-white tablet:px-10 tablet:pt-[max(5.5rem,12vh)]",
             demo && "pt-12",
           )}
         >
-          <p data-hero-line className="mb-4 text-[15px] font-medium text-white/90">
+          <p
+            data-hero-line
+            className="mb-4 text-[15px] font-medium tracking-[-0.01em] text-white/92"
+          >
             hey, I&apos;m {site.shortName}
           </p>
-          <h1 className="font-sans text-[clamp(2.55rem,6.2vw,4.6rem)] font-semibold leading-[1.02] tracking-[-0.05em] drop-shadow-[0_2px_24px_rgb(0_0_0_/0.35)]">
+          <h1
+            className="font-sans text-[clamp(2.75rem,6.8vw,5rem)] font-semibold leading-[0.98] tracking-[-0.055em] drop-shadow-[0_4px_28px_rgb(0_0_0_/0.45)]"
+            style={{ fontVariationSettings: '"wght" 650' }}
+          >
             <span data-hero-line className="block">
               Designing products
             </span>
-            <span data-hero-line className="relative mt-1 inline-block">
+            <span data-hero-line className="relative mt-1.5 inline-block">
               people{" "}
-              <span className="relative inline-block pb-[0.06em]">
+              <span className="relative inline-block pb-[0.08em]">
                 trust
                 <span
                   data-hero-accent
                   aria-hidden
-                  className="absolute inset-x-[-2%] bottom-[0.06em] h-[0.16em] origin-left bg-accent"
+                  className="absolute inset-x-[-4%] bottom-[0.04em] h-[0.22em] origin-left rounded-sm bg-accent"
                 />
               </span>
               .
             </span>
           </h1>
-          <p data-hero-line className="mt-5 max-w-md text-[17px] leading-snug text-white/80">
+          <p
+            data-hero-line
+            className="mt-6 max-w-md text-[18px] font-medium leading-snug tracking-[-0.02em] text-white/82"
+          >
             Lead product designer. Founder of Plux Studio.
           </p>
-          <div data-hero-line className="mt-5 flex flex-wrap gap-2">
-            {["Bangalore", "Plux", "Product systems"].map((chip) => (
-              <span
-                key={chip}
-                className="rounded-full border border-white/25 bg-black/25 px-3 py-1 text-[11px] font-medium text-white/90 backdrop-blur-md"
-              >
-                {chip}
-              </span>
-            ))}
-          </div>
           <p className="sr-only">
             {site.name} — Lead product designer and founder of Plux Studio.
-            Explore pinned work on the scene.
+            Explore pinned landmarks on the scene: Plux, Jio, PayU, Infosys,
+            SADAD.
           </p>
         </div>
 
-        {/* Scroll cue */}
         <p
           ref={cueRef}
           className={cn(
-            "absolute left-1/2 z-30 -translate-x-1/2 rounded-full border border-white/20 bg-black/35 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-white/85 backdrop-blur-md",
+            "absolute left-1/2 z-30 -translate-x-1/2 rounded-full border border-white/20 bg-black/40 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-white/85 backdrop-blur-md",
             demo ? "bottom-4" : "bottom-[5.75rem] tablet:bottom-[6.25rem]",
           )}
         >
