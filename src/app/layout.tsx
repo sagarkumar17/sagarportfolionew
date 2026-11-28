@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Preloader } from "@/components/ui/preloader";
+import { SiteChrome } from "@/components/site-chrome";
 import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { SoundProvider } from "@/components/sound-provider";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -12,8 +12,7 @@ import "./globals.css";
 /*
   Typography: Inter only — Maël Blanc styleguide.
   Variable Inter (optical size) matches Framer’s Inter Display feel at large sizes.
-  Scale: Display 120/72/48 · H2 64/42/34 · H3 40/22/20 · Body LG 26/19/18 ·
-  Body 17/15/15 · Small 14 · Label 11 (weights 400/500/600).
+  Chrome: James-system dock + top-right cluster + SFX (SiteChrome).
 */
 
 const inter = Inter({
@@ -53,8 +52,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SoundProvider>
             <SmoothScroll>
               <Preloader />
-              <SiteHeader />
-              <main className="flex-1 pt-14 tablet:pt-16">{children}</main>
+              <SiteChrome />
+              <main className="flex-1 pb-24">{children}</main>
               <SiteFooter />
             </SmoothScroll>
           </SoundProvider>

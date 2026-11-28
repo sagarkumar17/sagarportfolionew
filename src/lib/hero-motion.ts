@@ -1,17 +1,19 @@
-/** Shared timing for Home Hero + styleguide demo (section 2). */
+/** Shared timing for Home Hero + styleguide demo (James-system fidelity). */
 
 export const HERO = {
-  /** Soft settle after page-ready */
-  letterReveal: 0.85,
-  letterStagger: 0.045,
-  moduleReveal: 0.75,
-  moduleStagger: 0.09,
-  metaDelay: 0.55,
-  metaReveal: 0.5,
-  /** Pointer parallax strength (px) by depth 1–3 */
-  parallax: [0, 10, 18, 28] as const,
-  /** Scroll scrub distance (viewport fraction) */
-  scrollEnd: "+=85%",
+  /** Line rise after page-ready */
+  lineReveal: 1.05,
+  lineStagger: 0.12,
+  accentPaint: 0.85,
+  metaReveal: 0.55,
+  pinReveal: 0.7,
+  pinStagger: 0.08,
+  /** Fly-in scroll track end */
+  scrollEnd: "+=180%",
+  /** Camera scale/translate at end of fly-in */
+  flyScale: 1.35,
+  flyY: 12,
+  flyX: -4,
 } as const;
 
 export function prefersReducedMotion(): boolean {
@@ -41,7 +43,6 @@ export function waitForPageReady(): Promise<void> {
       attributeFilter: ["data-page-ready"],
     });
 
-    // Safety: never hang if flags were skipped
     window.setTimeout(() => {
       obs.disconnect();
       resolve();

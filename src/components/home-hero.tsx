@@ -3,12 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  ModuleAiStrip,
-  ModuleDsTokens,
-  ModuleProductFrame,
-  ModuleWorkflow,
-} from "@/components/home-hero-modules";
+import { HeroPins } from "@/components/hero-pins";
 import { site } from "@/lib/site";
 import {
   HERO,
@@ -20,17 +15,14 @@ import { cn } from "@/lib/cn";
 gsap.registerPlugin(ScrollTrigger);
 
 type HomeHeroProps = {
-  /** Styleguide framed demo — no page pin / no document scroll coupling. */
   demo?: boolean;
   className?: string;
-  /** Bump to remount + replay enter (demo). */
   replayKey?: number;
 };
 
 /**
- * Section 2 — Interactive home hero.
- * Kinetic type + modular product UI; enter after preloader;
- * pointer parallax + Maël hover; ScrollTrigger handoff into Featured work.
+ * James-system hero fidelity: full-bleed plate + top-left type + pins + fly-in.
+ * Sagar branding only — original plate, Plux accent, his project pins.
  */
 export function HomeHero({
   demo = false,
@@ -38,105 +30,55 @@ export function HomeHero({
   replayKey = 0,
 }: HomeHeroProps) {
   const rootRef = useRef<HTMLElement>(null);
-  const typeRef = useRef<HTMLHeadingElement>(null);
-  const metaRef = useRef<HTMLParagraphElement>(null);
-  const bridgeRef = useRef<HTMLDivElement>(null);
-  const modulesRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const camRef = useRef<HTMLDivElement>(null);
+  const typeRef = useRef<HTMLDivElement>(null);
+  const cueRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     const root = rootRef.current;
+    const stage = stageRef.current;
+    const cam = camRef.current;
     const typeEl = typeRef.current;
-    const metaEl = metaRef.current;
-    const bridgeEl = bridgeRef.current;
-    const modulesEl = modulesRef.current;
-    if (!root || !typeEl || !metaEl || !modulesEl) return;
+    const cueEl = cueRef.current;
+    if (!root || !stage || !cam || !typeEl) return;
 
-    const chars = Array.from(
-      typeEl.querySelectorAll<HTMLElement>("[data-hero-char]"),
+    const lines = Array.from(
+      typeEl.querySelectorAll<HTMLElement>("[data-hero-line]"),
     );
-    const modules = Array.from(
-      modulesEl.querySelectorAll<HTMLElement>("[data-hero-module]"),
+    const accent = typeEl.querySelector<HTMLElement>("[data-hero-accent]");
+    const pins = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-hero-pin]"),
     );
+    const hint = root.querySelector<HTMLElement>("[data-hero-hint]");
 
     let cancelled = false;
     let enterTl: gsap.core.Timeline | null = null;
     let scrollTrigger: ScrollTrigger | null = null;
-    let pointerRaf = 0;
-    let targetX = 0;
-    let targetY = 0;
-    let curX = 0;
-    let curY = 0;
-
     const reduced = prefersReducedMotion();
 
-    const setCssMotion = (
-      el: HTMLElement,
-      vars: Record<string, string | number>,
-    ) => {
-      Object.entries(vars).forEach(([k, v]) => {
-        el.style.setProperty(k, String(v));
-      });
-    };
-
-    const setReadyState = () => {
-      gsap.set(chars, { yPercent: 0, opacity: 1 });
-      modules.forEach((el, i) => {
-        const side = i % 2 === 0 ? -1 : 1;
-        setCssMotion(el, {
-          "--sx": "0px",
-          "--sy": "0px",
-          "--sop": "0.92",
-          "--sblur": "0px",
-          "--side": String(side),
-        });
-      });
-      gsap.set(metaEl, { opacity: 1, y: 0 });
-      if (bridgeEl) gsap.set(bridgeEl, { opacity: 1, y: 0 });
-      setCssMotion(typeEl, {
-        "--sx": "0px",
-        "--sy": "0px",
-        "--sop": "1",
-        "--sblur": "0px",
-      });
+    const setReady = () => {
+      gsap.set(lines, { y: 0, opacity: 1 });
+      if (accent) gsap.set(accent, { scaleX: 1, opacity: 1 });
+      gsap.set(pins, { opacity: 1, y: 0 });
+      if (hint) gsap.set(hint, { opacity: 0.7 });
+      if (cueEl) gsap.set(cueEl, { opacity: 1 });
       root.dataset.heroState = "ready";
     };
 
     const runEnter = () => {
       if (cancelled) return;
-
       if (reduced) {
-        setReadyState();
+        setReady();
         return;
       }
 
-      // Release boot CSS hide so CSS-var / GSAP opacity can drive the enter
       root.dataset.heroState = "animating";
-
-      gsap.set(chars, { yPercent: 110, opacity: 0 });
-      modules.forEach((el, i) => {
-        const side = i % 2 === 0 ? -1 : 1;
-        setCssMotion(el, {
-          "--sx": "0px",
-          "--sy": "48px",
-          "--sop": "0",
-          "--sblur": "10px",
-          "--px": "0px",
-          "--py": "0px",
-          "--side": String(side),
-        });
-      });
-      gsap.set(metaEl, { opacity: 0, y: 12 });
-      if (bridgeEl) gsap.set(bridgeEl, { opacity: 0, y: 10 });
-      setCssMotion(typeEl, {
-        "--sx": "0px",
-        "--sy": "0px",
-        "--sop": "1",
-        "--sblur": "0px",
-        "--px": "0px",
-        "--py": "0px",
-      });
-
-      const progress = modules.map(() => ({ y: 48, o: 0, b: 10 }));
+      gsap.set(lines, { y: 28, opacity: 0 });
+      if (accent) gsap.set(accent, { scaleX: 0, opacity: 1, transformOrigin: "left center" });
+      gsap.set(pins, { opacity: 0, y: 16 });
+      if (hint) gsap.set(hint, { opacity: 0 });
+      if (cueEl) gsap.set(cueEl, { opacity: 0, y: 8 });
 
       enterTl = gsap.timeline({
         defaults: { ease: "power3.out" },
@@ -145,139 +87,79 @@ export function HomeHero({
         },
       });
 
-      enterTl.to(chars, {
-        yPercent: 0,
+      enterTl.to(lines, {
+        y: 0,
         opacity: 1,
-        duration: HERO.letterReveal,
-        stagger: HERO.letterStagger,
+        duration: HERO.lineReveal,
+        stagger: HERO.lineStagger,
       });
 
-      modules.forEach((el, i) => {
-        enterTl!.to(
-          progress[i],
-          {
-            y: 0,
-            o: 0.92,
-            b: 0,
-            duration: HERO.moduleReveal,
-            onUpdate: () => {
-              setCssMotion(el, {
-                "--sy": `${progress[i].y}px`,
-                "--sop": String(progress[i].o),
-                "--sblur": `${progress[i].b}px`,
-              });
-            },
-          },
-          0.2 + i * HERO.moduleStagger,
+      if (accent) {
+        enterTl.to(
+          accent,
+          { scaleX: 1, duration: HERO.accentPaint, ease: "power2.out" },
+          0.55,
         );
-      });
+      }
 
       enterTl.to(
-        metaEl,
-        { opacity: 1, y: 0, duration: HERO.metaReveal },
-        HERO.metaDelay,
+        pins,
+        {
+          opacity: 1,
+          y: 0,
+          duration: HERO.pinReveal,
+          stagger: HERO.pinStagger,
+        },
+        0.45,
       );
 
-      if (bridgeEl) {
-        enterTl.to(
-          bridgeEl,
-          { opacity: 1, y: 0, duration: HERO.metaReveal },
-          HERO.metaDelay + 0.1,
-        );
+      if (hint) {
+        enterTl.to(hint, { opacity: 0.7, duration: 0.5 }, 1.1);
+      }
+      if (cueEl) {
+        enterTl.to(cueEl, { opacity: 1, y: 0, duration: HERO.metaReveal }, 1.0);
       }
     };
 
-    const setupScroll = () => {
+    const setupFlyIn = () => {
       if (demo || reduced || cancelled) return;
-
-      const work = document.querySelector<HTMLElement>("#work");
-      if (work) {
-        gsap.set(work, { opacity: 0, y: 40 });
-      }
 
       scrollTrigger = ScrollTrigger.create({
         trigger: root,
         start: "top top",
         end: HERO.scrollEnd,
-        scrub: 0.65,
-        pin: true,
-        pinSpacing: true,
+        scrub: 0.7,
+        pin: stage,
         anticipatePin: 1,
         onUpdate: (self) => {
           const p = self.progress;
-          modules.forEach((el, i) => {
-            const depth = Number(el.dataset.depth ?? 1);
-            const side = i % 2 === 0 ? -1 : 1;
-            setCssMotion(el, {
-              "--sx": `${side * depth * 28 * p}px`,
-              "--sy": `${-40 * p}px`,
-              "--sop": String(Math.max(0, 0.92 * (1 - p * 1.15))),
-              "--sblur": `${p * 8}px`,
-            });
+          const s = 1 + (HERO.flyScale - 1) * p;
+          gsap.set(cam, {
+            scale: s,
+            xPercent: HERO.flyX * p,
+            yPercent: HERO.flyY * p,
+            force3D: true,
           });
-          setCssMotion(typeEl, {
-            "--sy": `${-30 * p}px`,
-            "--sop": String(Math.max(0, 1 - p * 0.85)),
-            "--sblur": `${p * 4}px`,
+          gsap.set(typeEl, {
+            opacity: Math.max(0, 1 - p * 1.35),
+            y: -40 * p,
           });
-          gsap.set(metaEl, { opacity: Math.max(0, 1 - p * 1.2), y: -16 * p });
-          if (bridgeEl) {
-            gsap.set(bridgeEl, {
-              opacity: Math.max(0, 1 - p * 1.4),
-              y: 20 * p,
-            });
-          }
-          if (work) {
-            gsap.set(work, {
-              opacity: Math.min(1, p * 1.4),
-              y: (1 - p) * 40,
-            });
-          }
+          gsap.set(pins, {
+            opacity: Math.max(0, 1 - p * 1.5),
+            y: -20 * p,
+          });
+          if (cueEl) gsap.set(cueEl, { opacity: Math.max(0, 1 - p * 2) });
+          if (hint) gsap.set(hint, { opacity: Math.max(0, 0.7 - p * 1.4) });
+          root.classList.toggle("is-flying", p > 0.08 && p < 0.92);
         },
       });
-    };
-
-    const tickPointer = () => {
-      curX += (targetX - curX) * 0.08;
-      curY += (targetY - curY) * 0.08;
-
-      modules.forEach((el) => {
-        const depth = Number(el.dataset.depth ?? 1) as 1 | 2 | 3;
-        const strength = HERO.parallax[depth] ?? 12;
-        el.style.setProperty("--px", `${curX * strength}px`);
-        el.style.setProperty("--py", `${curY * strength}px`);
-      });
-
-      typeEl.style.setProperty("--px", `${curX * -6}px`);
-      typeEl.style.setProperty("--py", `${curY * -4}px`);
-
-      pointerRaf = requestAnimationFrame(tickPointer);
-    };
-
-    const onPointer = (e: PointerEvent) => {
-      if (reduced || root.dataset.heroState !== "ready") return;
-      const rect = root.getBoundingClientRect();
-      const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-      const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-      targetX = nx;
-      targetY = ny;
-    };
-
-    const onLeave = () => {
-      targetX = 0;
-      targetY = 0;
     };
 
     const start = async () => {
       if (!demo) await waitForPageReady();
       if (cancelled) return;
       runEnter();
-      if (!reduced) {
-        setupScroll();
-        root.addEventListener("pointermove", onPointer);
-        root.addEventListener("pointerleave", onLeave);
-        pointerRaf = requestAnimationFrame(tickPointer);
-      }
+      setupFlyIn();
     };
 
     void start();
@@ -286,114 +168,120 @@ export function HomeHero({
       cancelled = true;
       enterTl?.kill();
       scrollTrigger?.kill();
-      cancelAnimationFrame(pointerRaf);
-      root.removeEventListener("pointermove", onPointer);
-      root.removeEventListener("pointerleave", onLeave);
     };
   }, [demo, replayKey]);
-
-  const brand = `${site.shortName.toUpperCase()}.`;
-  const letters = brand.split("").map((ch, i) => (
-    <span key={`${ch}-${i}`} className="inline-block overflow-hidden">
-      <span
-        data-hero-char
-        className={cn(
-          "inline-block will-change-transform",
-          ch === "." && "text-accent",
-        )}
-      >
-        {ch}
-      </span>
-    </span>
-  ));
 
   return (
     <section
       ref={rootRef}
+      id="top"
       data-home-hero
       data-hero-state="enter"
       aria-label="Introduction"
       className={cn(
-        "hero-stage relative isolate flex flex-col justify-between overflow-hidden",
-        demo
-          ? "h-full min-h-[420px] rounded-sm border border-border-default"
-          : "-mt-14 min-h-svh pt-14 tablet:-mt-16 tablet:pt-16",
+        "hero-stage relative",
+        demo ? "h-full min-h-[480px] overflow-hidden rounded-sm" : "min-h-[220vh]",
         className,
       )}
     >
-      {/* Atmosphere */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-surface-secondary" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,color-mix(in_srgb,var(--accent)_10%,transparent),transparent_55%),radial-gradient(ellipse_at_80%_70%,color-mix(in_srgb,var(--text-primary)_8%,transparent),transparent_50%)]" />
+      <div
+        ref={stageRef}
+        className={cn(
+          "relative flex h-svh w-full flex-col overflow-hidden",
+          demo && "h-full min-h-[480px]",
+        )}
+      >
+        {/* Camera / plate */}
         <div
-          className="absolute inset-0 opacity-[0.035] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          }}
-        />
-      </div>
-
-      {/* Kinetic brand type */}
-      <div className="relative z-10 flex flex-1 flex-col justify-center px-5 tablet:px-8">
-        <p
-          ref={metaRef}
-          data-hero-meta
-          className="type-label mb-5 text-text-secondary will-change-[opacity,transform]"
+          ref={camRef}
+          className="absolute inset-0 origin-center will-change-transform"
+          data-hero-cam
         >
-          Lead product designer · Plux
-        </p>
-        <h1
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/assets/hero/plate.svg"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+            draggable={false}
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-black/35"
+          />
+          <HeroPins />
+        </div>
+
+        {/* Top-left type stack */}
+        <div
           ref={typeRef}
-          className="hero-type type-display max-w-[14ch] text-[clamp(3.5rem,16vw,9.5rem)] leading-[0.9] tracking-[-0.07em] text-text-primary will-change-transform"
+          className={cn(
+            "relative z-30 flex flex-1 flex-col justify-start px-5 pt-20 text-white tablet:px-10 tablet:pt-24 desktop:max-w-[40rem]",
+            demo && "pt-10",
+          )}
         >
-          {letters}
-        </h1>
-        <p className="sr-only">
-          {site.name} — Lead product designer and founder of Plux Studio.
-        </p>
-      </div>
-
-      {/* Desktop modular constellation */}
-      <div
-        ref={modulesRef}
-        className="absolute inset-0 z-20 hidden tablet:block"
-        aria-hidden
-      >
-        <ModuleDsTokens />
-        <ModuleProductFrame />
-        <ModuleAiStrip />
-        <ModuleWorkflow />
-      </div>
-
-      {/* Mobile strip */}
-      <div
-        className="relative z-20 grid grid-cols-2 gap-3 px-5 pb-6 tablet:hidden"
-        aria-hidden
-      >
-        <ModuleDsTokens className="!static !inset-auto !w-full opacity-90" />
-        <ModuleProductFrame className="!static !inset-auto !w-full opacity-90" />
-      </div>
-
-      {/* Scroll bridge */}
-      <div
-        ref={bridgeRef}
-        data-hero-bridge
-        className="relative z-30 mb-8 self-start px-5 tablet:mb-10 tablet:px-8"
-      >
-        {demo ? (
-          <p className="type-label text-text-secondary">Selected work ↓</p>
-        ) : (
-          <a
-            href="#work"
-            className="type-label inline-flex items-center gap-3 text-text-secondary transition-colors duration-300 hover:text-accent"
+          <p
+            data-hero-line
+            className="type-small mb-4 font-medium text-white/80"
           >
-            Selected work
-            <span
-              aria-hidden
-              className="inline-block h-8 w-px bg-border-strong/40"
-            />
-          </a>
+            hey, I&apos;m {site.shortName}
+          </p>
+          <h1 className="font-sans text-[clamp(2.4rem,6.5vw,4.75rem)] font-semibold leading-[1.02] tracking-[-0.05em]">
+            <span data-hero-line className="block">
+              Designing products
+            </span>
+            <span data-hero-line className="relative mt-1 inline-block">
+              people{" "}
+              <span className="relative inline-block">
+                trust
+                <span
+                  data-hero-accent
+                  aria-hidden
+                  className="absolute inset-x-0 bottom-[0.08em] h-[0.18em] origin-left bg-accent"
+                />
+              </span>
+              .
+            </span>
+          </h1>
+          <p
+            data-hero-line
+            className="type-body mt-5 max-w-md text-white/75"
+          >
+            Lead product designer. Founder of Plux Studio.
+          </p>
+          <div
+            data-hero-line
+            className="mt-5 flex flex-wrap gap-2"
+          >
+            {["Bangalore", "Plux", "Product systems"].map((chip) => (
+              <span
+                key={chip}
+                className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-medium text-white/85 backdrop-blur-sm"
+              >
+                {chip}
+              </span>
+            ))}
+          </div>
+          <p className="sr-only">
+            {site.name} — Lead product designer and founder of Plux Studio.
+            Explore pinned work on the scene.
+          </p>
+        </div>
+
+        {/* Scroll cue */}
+        {!demo ? (
+          <p
+            ref={cueRef}
+            className="absolute bottom-24 left-1/2 z-30 -translate-x-1/2 rounded-full border border-white/15 bg-black/30 px-3.5 py-1.5 type-label text-white/80 backdrop-blur-md tablet:bottom-28"
+          >
+            scroll to fly in
+          </p>
+        ) : (
+          <p
+            ref={cueRef}
+            className="absolute bottom-4 left-1/2 z-30 -translate-x-1/2 type-label text-white/70"
+          >
+            scroll to fly in
+          </p>
         )}
       </div>
     </section>

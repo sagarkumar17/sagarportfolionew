@@ -337,45 +337,24 @@ html[data-preloader="active"] {
   overflow: hidden;
 }
 
-/* ─── Motion · Home hero (section 2) ─── */
-.hero-type {
-  opacity: var(--sop, 1);
-  filter: blur(var(--sblur, 0px));
-  transform: translate3d(
-    calc(var(--px, 0px) + var(--sx, 0px)),
-    calc(var(--py, 0px) + var(--sy, 0px)),
-    0
-  );
-}
-
-.hero-module {
-  opacity: var(--sop, 0.92);
-  filter: blur(var(--sblur, 0px));
-  transform: translate3d(
-    calc(var(--px, 0px) + var(--sx, 0px)),
-    calc(var(--py, 0px) + var(--sy, 0px)),
-    0
-  );
-}
-
-/* Avoid flash before JS owns opacity (boot → animating/ready) */
-[data-home-hero][data-hero-state="enter"] .hero-module {
+/* ─── Motion · Home hero (James-system fidelity) ─── */
+[data-home-hero][data-hero-state="enter"] [data-hero-line],
+[data-home-hero][data-hero-state="enter"] [data-hero-pin],
+[data-home-hero][data-hero-state="enter"] [data-hero-hint] {
   opacity: 0;
 }
 
-[data-home-hero][data-hero-state="enter"] .hero-type [data-hero-char] {
-  opacity: 0;
+.hero-pin {
+  /* Maël: lift via translate only — never scale on hover */
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-[data-home-hero][data-hero-state="enter"] [data-hero-bridge],
-[data-home-hero][data-hero-state="enter"] [data-hero-meta] {
-  opacity: 0;
+.hero-pin:hover {
+  transform: translateY(-6px);
 }
 
-.hero-module:hover {
-  /* Maël: lift via opacity / fill only — never scale */
-  opacity: 1;
-  filter: blur(0px);
+[data-home-hero].is-flying [data-hero-pin] {
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -395,10 +374,14 @@ html[data-preloader="active"] {
     overflow: auto;
   }
 
-  .hero-type,
-  .hero-module {
+  [data-home-hero] [data-hero-line],
+  [data-home-hero] [data-hero-pin],
+  [data-home-hero] [data-hero-hint] {
     opacity: 1 !important;
-    filter: none !important;
     transform: none !important;
+  }
+
+  .hero-pin:hover {
+    transform: none;
   }
 }
