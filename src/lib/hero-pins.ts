@@ -14,14 +14,15 @@ export type HeroPin = {
   initial?: string;
 };
 
+/** Positions tuned to plate.jpg midground terraces / hills. */
 export const HERO_PINS: HeroPin[] = [
   {
     id: "plux",
     label: "Plux",
     meta: "Studio",
     href: "https://pluxstudio.in/",
-    x: 18,
-    y: 42,
+    x: 22,
+    y: 46,
     depth: 2,
     accent: true,
   },
@@ -30,8 +31,8 @@ export const HERO_PINS: HeroPin[] = [
     label: "Jio",
     meta: "AI Chat",
     href: "/work/jio-ai-chat",
-    x: 62,
-    y: 28,
+    x: 58,
+    y: 32,
     depth: 3,
   },
   {
@@ -39,8 +40,8 @@ export const HERO_PINS: HeroPin[] = [
     label: "PayU",
     meta: "Super App",
     href: "/work/payu-super-app",
-    x: 74,
-    y: 48,
+    x: 72,
+    y: 44,
     depth: 2,
   },
   {
@@ -48,8 +49,8 @@ export const HERO_PINS: HeroPin[] = [
     label: "CN",
     meta: "Express",
     href: "/work/cn-express-pass",
-    x: 48,
-    y: 58,
+    x: 46,
+    y: 52,
     depth: 1,
   },
   {
@@ -57,8 +58,8 @@ export const HERO_PINS: HeroPin[] = [
     label: "Me",
     meta: "Bangalore",
     href: "/about",
-    x: 28,
-    y: 68,
+    x: 34,
+    y: 66,
     depth: 1,
     initial: "SK",
   },

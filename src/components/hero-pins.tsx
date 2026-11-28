@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { HERO_PINS, type HeroPin } from "@/lib/hero-pins";
+import { HERO_PINS } from "@/lib/hero-pins";
+import type { HeroPin } from "@/lib/hero-pins";
 import { cn } from "@/lib/cn";
 
 function PinFace({ pin }: { pin: HeroPin }) {
@@ -12,16 +13,16 @@ function PinFace({ pin }: { pin: HeroPin }) {
           "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold",
           pin.accent
             ? "bg-accent text-accent-foreground"
-            : "bg-white/20 text-white",
+            : "bg-white/18 text-white ring-1 ring-white/25",
         )}
       >
         {pin.initial ?? pin.label.slice(0, 1)}
       </span>
-      <span className="min-w-0">
+      <span className="min-w-0 pr-0.5 text-left">
         <span className="block truncate text-[12px] font-semibold leading-tight text-white">
           {pin.label}
         </span>
-        <span className="block truncate text-[10px] leading-tight text-white/65">
+        <span className="block truncate text-[10px] leading-tight text-white/70">
           {pin.meta}
         </span>
       </span>
@@ -29,40 +30,44 @@ function PinFace({ pin }: { pin: HeroPin }) {
   );
 }
 
+function PinBody({ pin }: { pin: HeroPin }) {
+  return (
+    <span className="hero-pin group/pin flex flex-col items-center">
+      <span
+        className={cn(
+          "inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/25 bg-black/45 py-1.5 pl-1.5 pr-3 shadow-[0_10px_30px_rgb(0_0_0_/0.35)] backdrop-blur-md transition-[opacity,transform,background-color,border-color] duration-300 ease-[cubic-bezier(.22,1,.36,1)]",
+          "hover:border-white/45 hover:bg-black/60",
+        )}
+      >
+        <PinFace pin={pin} />
+      </span>
+      <span
+        className="mt-0 h-5 w-px bg-white/55 transition-[height,opacity] duration-300 group-hover/pin:h-8"
+        aria-hidden
+      />
+      <span
+        className="relative h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_0_3px_rgb(220_22_24_/0.55)] transition-[box-shadow] duration-300 group-hover/pin:shadow-[0_0_0_5px_rgb(220_22_24_/0.4)]"
+        aria-hidden
+      />
+    </span>
+  );
+}
+
 /**
- * Glass pins over the hero plate — James-system interaction, Sagar content.
- * Hover: opacity / translate only (Maël — no scale).
+ * Glass pins over the illustrated plate — James-system markers, Sagar content.
+ * Hover: translateY + opacity/fill only (no scale).
  */
 export function HeroPins({ className }: { className?: string }) {
   return (
-    <div className={cn("absolute inset-0 z-20", className)} aria-hidden={false}>
+    <div className={cn("absolute inset-0 z-40", className)}>
       {HERO_PINS.map((pin) => {
-        const body = (
-          <span className="hero-pin group/pin absolute flex flex-col items-center">
-            <span
-              className={cn(
-                "inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/40 py-1.5 pl-1.5 pr-3 shadow-[0_8px_30px_rgb(0_0_0_/0.25)] backdrop-blur-md transition-[opacity,transform,background-color,border-color] duration-300 ease-out",
-                "hover:border-white/35 hover:bg-black/55",
-              )}
-            >
-              <PinFace pin={pin} />
-            </span>
-            <span
-              className="mt-0 h-5 w-px bg-white/45 transition-[height,opacity] duration-300 group-hover/pin:h-7 group-hover/pin:opacity-100"
-              aria-hidden
-            />
-            <span
-              className="h-2 w-2 rounded-full bg-white shadow-[0_0_0_3px_rgb(255_255_255_/0.2)]"
-              aria-hidden
-            />
-          </span>
-        );
-
         const style = {
           left: `${pin.x}%`,
           top: `${pin.y}%`,
-          transform: "translate(-50%, -100%) translate3d(var(--px,0px), var(--py,0px), 0)",
         } as React.CSSProperties;
+
+        const classNamePin =
+          "absolute -translate-x-1/2 -translate-y-full cursor-pointer";
 
         if (!pin.href) {
           return (
@@ -71,9 +76,9 @@ export function HeroPins({ className }: { className?: string }) {
               data-hero-pin
               data-depth={pin.depth}
               style={style}
-              className="absolute"
+              className={classNamePin}
             >
-              {body}
+              <PinBody pin={pin} />
             </span>
           );
         }
@@ -87,11 +92,11 @@ export function HeroPins({ className }: { className?: string }) {
               data-hero-pin
               data-depth={pin.depth}
               style={style}
-              className="absolute"
+              className={classNamePin}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {body}
+              <PinBody pin={pin} />
             </a>
           );
         }
@@ -103,15 +108,15 @@ export function HeroPins({ className }: { className?: string }) {
             data-hero-pin
             data-depth={pin.depth}
             style={style}
-            className="absolute"
+            className={classNamePin}
           >
-            {body}
+            <PinBody pin={pin} />
           </Link>
         );
       })}
 
       <p
-        className="pointer-events-none absolute bottom-[18%] right-[12%] hidden rotate-[-8deg] text-[13px] font-medium text-white/70 tablet:block"
+        className="pointer-events-none absolute bottom-[20%] right-[10%] hidden rotate-[-8deg] text-[13px] font-medium text-white/80 drop-shadow tablet:block"
         data-hero-hint
       >
         click a place →

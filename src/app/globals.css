@@ -338,10 +338,16 @@ html[data-preloader="active"] {
 }
 
 /* ─── Motion · Home hero (James-system fidelity) ─── */
+/* Plate/cam always visible — only type/pins hide before enter */
 [data-home-hero][data-hero-state="enter"] [data-hero-line],
 [data-home-hero][data-hero-state="enter"] [data-hero-pin],
 [data-home-hero][data-hero-state="enter"] [data-hero-hint] {
   opacity: 0;
+}
+
+.hero-stage [data-hero-cam] {
+  /* Guarantee painted field even before img paints */
+  background: #1c1814;
 }
 
 .hero-pin {
@@ -350,7 +356,7 @@ html[data-preloader="active"] {
 }
 
 .hero-pin:hover {
-  transform: translateY(-6px);
+  transform: translateY(-7px);
 }
 
 [data-home-hero].is-flying [data-hero-pin] {
